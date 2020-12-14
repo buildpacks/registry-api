@@ -1,0 +1,17 @@
+{
+  "name": "search",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "index": "node ./bin/indexer"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "execa": "^4.0.3",
+    "express": "~4.16.1",
+    "js-search": "^2.0.0",
+    "morgan": "~1.9.1"
+  }
+}
