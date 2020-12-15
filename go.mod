@@ -1,3 +1,4 @@
+// +heroku goVersion go1.15
 module github.com/buildpacks/registry-api
 
 go 1.15
