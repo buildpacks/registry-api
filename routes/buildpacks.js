@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const jssearch = require('js-search');
 
-const REPO_PATH = 'tmp';
+const REPO_PATH = 'tmpOld';
 
 let allBuildpacks = [];
 let index = buildSearchIndex(allBuildpacks);
