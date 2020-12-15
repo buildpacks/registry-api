@@ -1,2 +1,3 @@
-index: yarn run index
+index: yarn index
+web: yarn start
 release: ./bin/migrate
