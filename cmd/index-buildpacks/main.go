@@ -159,11 +159,11 @@ func FetchBuildpackConfig(e Entry, imageFn ImageFunction) (Metadata, error) {
 
 func UpsertMetadata(db *sql.DB, e Entry, m Metadata) error {
 	upsert := `
-INSERT INTO buildpacks (namespace, name, version, addr, homepage, description, licenses, stacks)
-VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+INSERT INTO buildpacks (namespace, name, version, addr, homepage, description, licenses, stacks, created_at, updated_at)
+VALUES($1, $2, $3, $4, $5, $6, $7, $8, now(), now())
 ON CONFLICT (namespace, name, version)
 DO
-   UPDATE SET homepage = $5, description = $6, licenses = $7, stacks = $8;
+   UPDATE SET homepage = $5, description = $6, licenses = $7, stacks = $8, updated_at = now();
 `
 	var stacks []string
 	for _, s := range m.Stacks {

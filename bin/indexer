@@ -8,7 +8,7 @@ const os = require('os');
 const REPO_PATH = 'tmp';
 
 (async () => {
-    let indexPath = path.join(REPO_PATH, "index.js")
+    let indexPath = path.join(REPO_PATH, "index.json")
     while (true) {
         console.log('at=main level=info msg="trying to update registry-index repo"');
         const success = await createUpdateRepo(REPO_PATH);
