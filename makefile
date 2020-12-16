@@ -7,13 +7,7 @@ build:
 
 test:
 	@go test ./...
-
-createdb:
-	@createdb cnb-registry-api-dev
-
-resetdb:
-	@dropdb cnb-registry-api-dev
-	@createdb cnb-registry-api-dev
+	@bundle exec rails test
 
 dburl:
 	@echo "postgres://localhost:5432/cnb-registry-api-dev?sslmode=disable"

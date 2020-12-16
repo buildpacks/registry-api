@@ -1,0 +1,2 @@
+class Buildpack < ApplicationRecord
+end
