@@ -14,3 +14,6 @@ dburl:
 
 psql:
 	@psql -h localhost -p 5432 cnb-registry-api-dev
+
+index:
+	@DATABASE_URL="postgres://localhost:5432/cnb-registry-api-dev?sslmode=disable" yarn run index
