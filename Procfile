@@ -1,2 +1,3 @@
+web: bundle exec puma -C config/puma.rb
 index: yarn run index
-release: ./bin/migrate
+release: bundle exec rake db:migrate
