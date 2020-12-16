@@ -5,16 +5,16 @@ const execa = require('execa');
 const path = require('path');
 const os = require('os');
 
-const REPO_PATH = 'tmp';
-
 (async () => {
-    let indexPath = path.join(REPO_PATH, "index.json")
+    let tempPath = execa.sync('mktemp', ['-d']).stdout
+    let repoPath = path.join(tempPath, 'tmp')
+    let indexPath = path.join(tempPath, "index.json")
     while (true) {
         console.log('at=main level=info msg="trying to update registry-index repo"');
-        const success = await createUpdateRepo(REPO_PATH);
+        const success = await createUpdateRepo(repoPath);
         if (success) {
             console.log('at=main level=info msg="building index config data cache"');
-            fs.writeFileSync(indexPath, JSON.stringify(getNormalisedRegistry(REPO_PATH)))
+            fs.writeFileSync(indexPath, JSON.stringify(getNormalisedRegistry(repoPath)))
             console.log('at=main level=info msg="serialized index to file"');
             await buildIndex(indexPath)
             console.log('at=main level=debug msg="done building index config data cache"');
