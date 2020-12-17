@@ -34,7 +34,9 @@ jobs:
     - name: Install dependencies
       run: bundle install
     - name: Rails Tests
-      run: bundle exec rails test
+      run: |
+        bin/rails db:migrate
+        bin/rails test
       env:
         DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
     - name: Set up Golang env
