@@ -16,9 +16,9 @@ jobs:
       with:
         ruby-version: 2.7.2
     - name: Set up Golang
-        uses: actions/setup-go@v2.1.3
-        with:
-          go-version: '1.14'
+      uses: actions/setup-go@v2.1.3
+      with:
+        go-version: '1.14'
     - name: Install dependencies
       run: bundle install
     - name: Rails Tests
