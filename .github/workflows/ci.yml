@@ -19,6 +19,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
@@ -34,7 +36,7 @@ jobs:
     - name: Rails Tests
       run: bundle exec rails test
       env:
-        DATABASE_URL: postgres://postgres:5432/cnb-registry-api-test?sslmode=disable
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
     - name: Set up Golang env
       run: |
         echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
