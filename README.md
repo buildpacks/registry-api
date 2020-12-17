@@ -19,12 +19,12 @@ GET /search
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **matches** | *string* | keyword(s) to search for | "java"
+| **matches** | *string* | keyword(s) to search for | `"java"`
 
 #### Request Example
 
 ```bash
-$ curl https://registry.buildpacks.io/v1/search?matches=projectriff
+$ curl "https://registry.buildpacks.io/v1/search?matches=projectriff"
 ```
 
 #### Response Example
