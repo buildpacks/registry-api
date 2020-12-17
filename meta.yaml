@@ -1,0 +1,23 @@
+---
+  $schema: "http://interagent.github.io/interagent-hyper-schema"
+  definitions: {}
+  description: "The Buildpack Registry API empowers developers to automate, extend and combine Buildpacks with other services."
+  id: "http://api.buildpacks.io//api/v1/schema#"
+  links:
+    -
+      href: "https://registry.buildpacks.io/api/v1"
+      rel: "self"
+    -
+      href: "/schema"
+      method: "GET"
+      rel: "self"
+      # This will work, but we need to start passing the hyper-schema into
+      # Committee as it won't resolve over HTTP.
+      #targetSchema:
+      #  $ref: "http://json-schema.org/draft-04/hyper-schema#"
+      targetSchema:
+        additionalProperties: true
+  properties: {}
+  title: "Buildpack Registry API"
+  type:
+    - "object"

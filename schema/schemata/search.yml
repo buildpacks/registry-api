@@ -1,0 +1,47 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: Buildpack Registry - Search
+description: "Search for Buildpacks in the Registry"
+stability: prototype
+strictProperties: true
+type:
+- object
+definitions:
+  matches:
+    description: keyword to search for
+    readOnly: true
+    type:
+    - string
+links:
+- description: Search for buildpacks matching a keyword.
+  href: "/search"
+  method: GET
+  rel: instances
+  title: Search
+  type:
+  - object
+properties:
+  latest:
+    properties:
+      namespace:
+        $ref: "/schemata/buildpack#/definitions/namespace"
+      name:
+        $ref: "/schemata/buildpack#/definitions/name"
+      version:
+        $ref: "/schemata/buildpack#/definitions/version"
+  versions:
+    properties:
+        "<version>":
+          properties:
+            namespace:
+              $ref: "/schemata/buildpack#/definitions/namespace"
+            name:
+              $ref: "/schemata/buildpack#/definitions/name"
+            version:
+              $ref: "/schemata/buildpack#/definitions/version"
+          type:
+            - object
+    type:
+      - object
+
+id: schemata/search

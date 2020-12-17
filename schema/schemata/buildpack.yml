@@ -1,0 +1,65 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: Buildpack Registry - Buildpack
+description: "Buildpacks indexed in the Cloud Native Buildpack Registry."
+stability: prototype
+strictProperties: true
+type:
+- object
+definitions:
+  id:
+    description: unique identifier of buildpack
+    readOnly: true
+    format: uuid
+    type:
+    - string
+  namespace:
+    description: namespace of buildpack
+    readOnly: true
+    example: acme
+    type:
+    - string
+  name:
+    description: name of buildpack
+    readOnly: true
+    example: java
+    type:
+    - string
+  version:
+    description: version of buildpack
+    readOnly: true
+    example: "1.0.0"
+    type:
+    - string
+  identity:
+    anyOf:
+    - "$ref": "/schemata/buildpack#/definitions/id"
+  created_at:
+    description: when buildpack was created
+    format: date-time
+    type:
+    - string
+  updated_at:
+    description: when buildpack was updated
+    format: date-time
+    type:
+    - string
+links:
+- description: Info for a specific buildpack version.
+  href: "/buildpacks/{(%2Fschemata%2Fbuildpack%23%2Fdefinitions%2Fnamespace)}/{(%2Fschemata%2Fbuildpack%23%2Fdefinitions%2Fname)}/{(%2Fschemata%2Fbuildpack%23%2Fdefinitions%2Fversion)}"
+  method: GET
+  rel: self
+  title: Info
+- description: List of versions for buildpack.
+  href: "/buildpacks/{(%2Fschemata%2Fbuildpack%23%2Fdefinitions%2Fnamespace)}/{(%2Fschemata%2Fbuildpack%23%2Fdefinitions%2Fname)}"
+  method: GET
+  rel: instances
+  title: List
+properties:
+  name:
+    "$ref": "/schemata/buildpack#/definitions/name"
+  namespace:
+    "$ref": "/schemata/buildpack#/definitions/namespace"
+  version:
+    "$ref": "/schemata/buildpack#/definitions/version"
+id: schemata/buildpack

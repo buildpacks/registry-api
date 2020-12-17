@@ -34,7 +34,12 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 end
 
-# Rails.application.config.middleware.use(
-#   Committee::Middleware::RequestValidation,
-#   schema: JSON.parse(Rails.root.join('schema', 'schema.json').read)
-# )
+Rails.application.config.middleware.use(
+  Committee::Middleware::RequestValidation,
+  schema_path: Rails.root.join('schema', 'schema.json')
+)
+
+Rails.application.config.middleware.use(
+  Committee::Middleware::ResponseValidation,
+  schema_path: Rails.root.join('schema', 'schema.json')
+)
