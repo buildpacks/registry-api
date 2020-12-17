@@ -5,7 +5,7 @@ SHELL=/bin/bash -o pipefail
 build:
 	@go build -o bin/ ./...
 
-test:
+unit:
 	@go test ./...
 	@bundle exec rails test
 
