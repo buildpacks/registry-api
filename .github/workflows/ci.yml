@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       run: bundle install
     - name: Rails Tests
-      run: bundle exec rake
+      run: bundle exec rails test
     - name: Set up Golang env
       run: |
         echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
