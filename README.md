@@ -6,6 +6,10 @@ This repository contains an application that exposes an API for interacting with
 
 ## Endpoints
 
+- [Search](#search)
+- [Buildpack Version List](#buildpack-version-list)
+- [Buildpack Version Info](#buildpack-version-info)
+
 ### Search
 
 Search for a buildpack by keyword(s).
