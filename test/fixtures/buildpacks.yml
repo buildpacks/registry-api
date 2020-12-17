@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  namespace: example
+  name: first
+  version: "1.0.0"
+  addr: MyString
+  yanked: false
+  description: MyText
+  homepage: MyText
+  licenses: [MyText]
+  stacks: [MyText]
+
+two:
+  namespace: example
+  name: second
+  version: "1.0.0"
+  addr: MyString
+  yanked: false
+  description: MyText
+  homepage: MyText
+  licenses: [MyText]
+  stacks: [MyText]

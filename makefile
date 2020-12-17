@@ -5,18 +5,15 @@ SHELL=/bin/bash -o pipefail
 build:
 	@go build -o bin/ ./...
 
-test:
+unit:
 	@go test ./...
-
-createdb:
-	@createdb cnb-registry-api-dev
-
-resetdb:
-	@dropdb cnb-registry-api-dev
-	@createdb cnb-registry-api-dev
+	@bundle exec rails test
 
 dburl:
 	@echo "postgres://localhost:5432/cnb-registry-api-dev?sslmode=disable"
 
 psql:
 	@psql -h localhost -p 5432 cnb-registry-api-dev
+
+index:
+	@DATABASE_URL="postgres://localhost:5432/cnb-registry-api-dev?sslmode=disable" yarn run index
