@@ -5,10 +5,10 @@ class Api::V1::BuildpacksControllerTest < ActionDispatch::IntegrationTest
     get "/api/v1/buildpacks/example/first"
     assert_response :success
     b = JSON.parse(response.body)
-    assert_equal 1, b.size
-    assert_equal 'example', b[0]['namespace']
-    assert_equal 'first', b[0]['name']
-    assert_equal '1.0.0', b[0]['version']
+    assert_equal 2, b.size
+    assert_equal 'example', b['latest']['namespace']
+    assert_equal 'first', b['latest']['name']
+    assert_equal '1.0.0', b['latest']['version']
   end
 
   test "should get show" do

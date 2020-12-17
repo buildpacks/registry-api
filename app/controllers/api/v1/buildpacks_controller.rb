@@ -4,15 +4,36 @@ class Api::V1::BuildpacksController < ApplicationController
   def index
     buildpack_params = params.permit(:name, :namespace)
 
-    @buildpacks = Buildpack.where(buildpack_params)
+    buildpacks = Buildpack.
+    select(
+      :version,
+      :namespace,
+      :name,
+      :description,
+      :homepage,
+      :licenses,
+      :stacks,
+      :id
+    ).
+    where(buildpack_params).order(
+      version_major: :desc,
+      version_minor: :desc,
+      version_patch: :desc,
+    )
 
-    # TODO
-    # - figure out which one is the "latest"
-    # - maybe s/id/ref/ so as not to mix them up
-    # - replace each version with a _link
-    # - create a map with {"latest": {...}, "versions": {...}}
+    if buildpacks.empty?
+      render json: unknown_buildpack, status: :not_found
+    else
+      versions = buildpacks.map do |b|
+        {
+          "version": b.version,
+          # TODO make the host a variable/constant
+          "_link": "https://registry.buildpacks.io/api/v1/buildpacks/#{b.namespace}/#{b.name}/#{b.version}"
+        }
+      end
 
-    render json: @buildpacks || []
+      render json: { "latest": buildpacks[0], "versions": versions }
+    end
   end
 
   # GET /buildpacks/:namespace/:name/:version
@@ -21,6 +42,16 @@ class Api::V1::BuildpacksController < ApplicationController
 
     @buildpack = Buildpack.find_by(buildpack_params)
 
-    render json: @buildpack || []
+    if @buildpack
+      render json: @buildpack
+    else
+      render json: unknown_buildpack, status: :not_found
+    end
+  end
+
+  private
+
+  def unknown_buildpack
+    {error: "Unknown buildpack"}
   end
 end

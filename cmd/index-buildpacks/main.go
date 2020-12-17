@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"github.com/lib/pq"
 
@@ -159,11 +160,32 @@ func FetchBuildpackConfig(e Entry, imageFn ImageFunction) (Metadata, error) {
 
 func UpsertMetadata(db *sql.DB, e Entry, m Metadata) error {
 	upsert := `
-INSERT INTO buildpacks (namespace, name, version, addr, homepage, description, licenses, stacks, created_at, updated_at)
-VALUES($1, $2, $3, $4, $5, $6, $7, $8, now(), now())
+INSERT INTO buildpacks (
+	namespace,
+	name,
+	version,
+	addr,
+	homepage,
+	description,
+	licenses,
+	stacks,
+	version_major,
+	version_minor,
+	version_patch,
+	created_at,
+	updated_at)
+VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, now(), now())
 ON CONFLICT (namespace, name, version)
 DO
-   UPDATE SET homepage = $5, description = $6, licenses = $7, stacks = $8, updated_at = now();
+	 UPDATE SET
+		 homepage = $5,
+		 description = $6,
+		 licenses = $7,
+		 stacks = $8,
+		 version_major = $9,
+		 version_minor = $10,
+		 version_patch = $11,
+		 updated_at = now();
 `
 	var stacks []string
 	for _, s := range m.Stacks {
@@ -175,7 +197,24 @@ DO
 		stacks = append(stacks, s.Type)
 	}
 
-	_, err := db.Exec(upsert, e.Namespace, e.Name, e.Version, e.Address, m.Homepage, m.Description, pq.Array(licenses), pq.Array(stacks))
+	version := strings.Split(m.Version, ".")
+	if len(version) < 3 {
+		return fmt.Errorf("invalid semver: %s", m.Version)
+	}
+
+	_, err := db.Exec(upsert,
+		e.Namespace,
+		e.Name,
+		e.Version,
+		e.Address,
+		m.Homepage,
+		m.Description,
+		pq.Array(licenses),
+		pq.Array(stacks),
+		version[0],
+		version[1],
+		version[2],
+	)
 	if err != nil {
 		return err
 	}

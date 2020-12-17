@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_210624) do
+ActiveRecord::Schema.define(version: 2020_12_17_204540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 2020_12_16_210624) do
     t.text "stacks", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "version_major", limit: 120, default: "0", null: false
+    t.string "version_minor", limit: 120, default: "0", null: false
+    t.string "version_patch", limit: 120, default: "0", null: false
     t.index ["name", "namespace", "version"], name: "index_buildpacks_on_name_namespace_version", unique: true
   end
 
