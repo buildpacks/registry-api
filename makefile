@@ -5,9 +5,13 @@ SHELL=/bin/bash -o pipefail
 build:
 	@go build -o bin/ ./...
 
-unit:
+test-go:
 	@go test ./...
+
+test-ruby:
 	@bundle exec rails test
+
+test: test-go test-ruby
 
 dburl:
 	@echo "postgres://localhost:5432/cnb-registry-api-dev?sslmode=disable"
@@ -17,3 +21,12 @@ psql:
 
 index:
 	@DATABASE_URL="postgres://localhost:5432/cnb-registry-api-dev?sslmode=disable" yarn run index
+
+# generate-schema:
+# 	@bundle exec prmd combine --meta meta.yaml schema/schemata/ > schema/schema.json
+# 	@bundle exec prmd verify schema/schema.json
+
+# generate-api-ref:
+# 	@bundle exec prmd doc schema/schema.json > schema/api-reference.md
+
+# schema: generate-schema generate-api-ref
