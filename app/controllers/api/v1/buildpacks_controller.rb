@@ -8,6 +8,7 @@ class Api::V1::BuildpacksController < ApplicationController
 
     # TODO
     # - figure out which one is the "latest"
+    # - maybe s/id/ref/ so as not to mix them up
     # - replace each version with a _link
     # - create a map with {"latest": {...}, "versions": {...}}
 
