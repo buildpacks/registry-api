@@ -10,6 +10,7 @@ class Api::V1::SearchController < ApplicationController
       # TODO
       # - group the buildpacks by ns/name
       # - figure out which one is the "latest"
+      # - replace each version with a _link
       # - create a map with {"latest": {...}, "versions": {...}}
       # - put each map in an array
       # - paginate the array

@@ -8,6 +8,7 @@ class Api::V1::BuildpacksController < ApplicationController
 
     # TODO
     # - figure out which one is the "latest"
+    # - replace each version with a _link
     # - create a map with {"latest": {...}, "versions": {...}}
 
     render json: @buildpacks || []
