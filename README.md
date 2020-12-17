@@ -10,7 +10,6 @@ This repository contains an application that exposes an API for interacting with
 
 Search for a buildpack by keyword(s).
 
-
 ```
 GET /search
 ```
@@ -24,7 +23,7 @@ GET /search
 #### Request Example
 
 ```bash
-$ curl "https://registry.buildpacks.io/v1/search?matches=projectriff"
+$ curl "https://registry.buildpacks.io/api/v1/search?matches=projectriff"
 ```
 
 #### Response Example
@@ -43,14 +42,95 @@ $ curl "https://registry.buildpacks.io/v1/search?matches=projectriff"
       },
       "versions": {
         "1.4.1": {
-          "link": "https://registry.buildpacks.io/v1/buildpacks/projectriff/command-function/1.4.1"
+          "link": "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.4.1"
         },
         "1.3.9": {
-          "link": "https://registry.buildpacks.io/v1/buildpacks/projectriff/command-function/1.3.9"
+          "link": "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.3.9"
         }
       }
     }
 ]
+```
+
+### Buildpack Version List
+
+Search for a buildpack by keyword(s).
+
+```
+GET /buildpacks/:namespace/:name
+```
+
+#### Required Parameters
+
+| Name | Type | Description | Example |
+| ------- | ------- | ------- | ------- |
+| **namespace** | *string* | the namespace component from the ID of the buildpack | `"projectriff"`
+| **name** | *string* | the name component from the ID of the buildpack | `"command-function"`
+
+#### Request Example
+
+```bash
+$ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function"
+```
+
+#### Response Example
+
+```json
+{
+  "latest": {
+    "description": "The Command Function Buildpack is a Cloud Native Buildpack V3 that provides riff Command Function Invoker to functions",
+    "license": "MIT",
+    "ns":"projectriff",
+    "name":"command-function",
+    "version": "1.4.1",
+    "yanked":false,
+    "addr":"gcr.io/projectriff/command-function@sha256:99f9054abb73635a9b251b61d3627a8ff86508c767f9d691c426d45e8758596f"
+  },
+  "versions": {
+    "1.4.1": {
+      "link": "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.4.1"
+    },
+    "1.3.9": {
+      "link": "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.3.9"
+    }
+  }
+}
+```
+
+### Buildpack Version Info
+
+Search for a buildpack by keyword(s).
+
+```
+GET /buildpacks/:namespace/:name/:version
+```
+
+#### Required Parameters
+
+| Name | Type | Description | Example |
+| ------- | ------- | ------- | ------- |
+| **namespace** | *string* | the namespace component from the ID of the buildpack | `"projectriff"`
+| **name** | *string* | the name component from the ID of the buildpack | `"command-function"`
+| **version** | *string* | the version of the buildpack | `"1.4.1"`
+
+#### Request Example
+
+```bash
+$ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function"
+```
+
+#### Response Example
+
+```json
+{
+  "description": "The Command Function Buildpack is a Cloud Native Buildpack V3 that provides riff Command Function Invoker to functions",
+  "license": "MIT",
+  "ns":"projectriff",
+  "name":"command-function",
+  "version": "1.4.1",
+  "yanked":false,
+  "addr":"gcr.io/projectriff/command-function@sha256:99f9054abb73635a9b251b61d3627a8ff86508c767f9d691c426d45e8758596f"
+}
 ```
 
 ## Development
