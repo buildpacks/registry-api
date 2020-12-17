@@ -2,7 +2,7 @@ class Api::V1::SearchController < ApplicationController
   def index
     search_params = params.permit(:matches)
 
-    if !(m = search_params[:matches]).empty?
+    if search_params[:matches] && !(m = search_params[:matches]).empty?
 
       # TODO search the database
 
