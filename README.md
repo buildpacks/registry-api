@@ -26,7 +26,7 @@ GET /search
 
 #### Request Example
 
-```bash
+```sh-session
 $ curl "https://registry.buildpacks.io/api/v1/search?matches=projectriff"
 ```
 
@@ -73,7 +73,7 @@ GET /buildpacks/:namespace/:name
 
 #### Request Example
 
-```bash
+```sh-session
 $ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function"
 ```
 
@@ -119,8 +119,8 @@ GET /buildpacks/:namespace/:name/:version
 
 #### Request Example
 
-```bash
-$ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function"
+```sh-session
+$ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.4.1"
 ```
 
 #### Response Example
