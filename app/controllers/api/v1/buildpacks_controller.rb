@@ -6,6 +6,10 @@ class Api::V1::BuildpacksController < ApplicationController
 
     @buildpacks = Buildpack.where(buildpack_params)
 
+    # TODO
+    # - figure out which one is the "latest"
+    # - create a map with {"latest": {...}, "versions": {...}}
+
     render json: @buildpacks || []
   end
 
