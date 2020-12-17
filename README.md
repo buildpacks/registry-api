@@ -144,7 +144,7 @@ This project requires [Ruby](http://www.ruby-lang.org/en/) and [Golang](https://
 Run the tests:
 
 ```
-$ make unit
+$ make test
 ```
 
 This app uses [PostgreSQL](https://www.postgresql.org/). To set up the database, run:
