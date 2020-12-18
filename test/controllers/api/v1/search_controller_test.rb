@@ -6,6 +6,7 @@ class Api::V1::SearchControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     b = JSON.parse(response.body)
     assert_equal 2, b.size
-    assert_equal 'example', b[0]['namespace']
+    assert_equal 2, b[0].size
+    assert_equal 'example', b[0]['latest']['namespace']
   end
 end
