@@ -1,0 +1,19 @@
+@import "../colors.scss";
+
+.Search-Summary {
+    font-size: 1.15rem;
+    font-weight: 400;
+
+    .Search-Subtext {
+        font-size: .85rem;
+    }
+
+    .Search-Term {
+        font-weight: 600;
+    }
+
+    .Search-Count {
+        color: $pink;
+        text-decoration: underline;
+    }
+}

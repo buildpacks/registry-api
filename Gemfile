@@ -12,6 +12,7 @@ gem 'committee'
 gem 'rollbar'
 gem 'rack-cors'
 gem 'rack-attack'
+gem 'webpacker'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
