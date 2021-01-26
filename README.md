@@ -1,14 +1,14 @@
-# Buildpack Registry API
+# Types Registry API
 
 ![CI](https://github.com/buildpacks/registry-api/workflows/CI/badge.svg)
 
-This repository contains an application that exposes an API for interacting with the [Buildpack Registry](https://github.com/buildpacks/rfcs/blob/main/text/0032-update-json-cnb-registry.md).
+This repository contains an application that exposes an API for interacting with the [Types Registry](https://github.com/buildpacks/rfcs/blob/main/text/0032-update-json-cnb-registry.md).
 
 ## Endpoints
 
 - [Search](#search)
-- [Buildpack Version List](#buildpack-version-list)
-- [Buildpack Version Info](#buildpack-version-info)
+- [Types Version List](#buildpack-version-list)
+- [Types Version Info](#buildpack-version-info)
 
 ### Search
 
@@ -36,7 +36,7 @@ $ curl "https://registry.buildpacks.io/api/v1/search?matches=projectriff"
 [
     {
       "latest": {
-        "description": "The Command Function Buildpack is a Cloud Native Buildpack V3 that provides riff Command Function Invoker to functions",
+        "description": "The Command Function Types is a Cloud Native Types V3 that provides riff Command Function Invoker to functions",
         "license": "MIT",
         "ns":"projectriff",
         "name":"command-function",
@@ -56,7 +56,7 @@ $ curl "https://registry.buildpacks.io/api/v1/search?matches=projectriff"
 ]
 ```
 
-### Buildpack Version List
+### Types Version List
 
 Search for a buildpack by keyword(s).
 
@@ -82,7 +82,7 @@ $ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-fun
 ```json
 {
   "latest": {
-    "description": "The Command Function Buildpack is a Cloud Native Buildpack V3 that provides riff Command Function Invoker to functions",
+    "description": "The Command Function Types is a Cloud Native Types V3 that provides riff Command Function Invoker to functions",
     "license": "MIT",
     "ns":"projectriff",
     "name":"command-function",
@@ -101,7 +101,7 @@ $ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-fun
 }
 ```
 
-### Buildpack Version Info
+### Types Version Info
 
 Search for a buildpack by keyword(s).
 
@@ -127,7 +127,7 @@ $ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-fun
 
 ```json
 {
-  "description": "The Command Function Buildpack is a Cloud Native Buildpack V3 that provides riff Command Function Invoker to functions",
+  "description": "The Command Function Types is a Cloud Native Types V3 that provides riff Command Function Invoker to functions",
   "license": "MIT",
   "ns":"projectriff",
   "name":"command-function",
