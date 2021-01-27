@@ -1,0 +1,29 @@
+@import "../colors.scss";
+
+.Detail-header {
+    background-color: #252960;
+  }
+
+  .Detail-list {
+    display: flex;
+    flex-direction: column;
+    padding: .5em;
+  }
+
+.Detail-Summary {
+    font-size: 1.15rem;
+    font-weight: 400;
+
+    .Detail-Subtext {
+        font-size: .85rem;
+    }
+
+    .Detail-Term {
+        font-weight: 600;
+    }
+
+    .Detail-Count {
+        color: $pink;
+        text-decoration: underline;
+    }
+}
