@@ -5,7 +5,6 @@ import Axios, { AxiosResponse } from 'axios';
 import Loader from "react-spinners/RotateLoader";
 import { Container, FormControl, InputGroup } from 'react-bootstrap';
 import { Item as BuildpackItem } from '../buildpack/Item';
-import { Pagination } from './Pagination';
 import { Summary } from './Summary';
 
 function SearchList(props: any) {
@@ -34,6 +33,11 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
     }
 
     render() {
+        let summary = <Summary totalCount={this.state.searchResults.length} searchTerm={this.state.searchTerm} />;
+        if (this.state.loading || (this.state.searchResults.length === 0 && this.state.searchTerm === '')) {
+            summary = null;
+        }
+
         return (
             <div className="Search">
                 <div className="Search-header">
@@ -53,12 +57,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
                     loading={this.state.loading}
                 />
                 <Container>
-                    <div className="d-flex my-4 px-3">
-                        <Summary totalCount={this.state.searchResults.length} searchTerm={this.state.searchTerm} />
-                        {/*<div className="ml-auto">*/}
-                        {/*    <Pagination totalCount={100} limit={10} startIndex={10} />*/}
-                        {/*</div>*/}
-                    </div>
+                    {summary}
                     <SearchList searchItems={this.state.searchResults} />
                 </Container>
             </div>

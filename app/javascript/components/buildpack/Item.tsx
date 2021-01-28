@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { Buildpack } from './Buildpack';
+import { Buildpack } from './Types';
 import "./Item.scss";
 import { Link } from 'react-router-dom';
 
@@ -14,7 +14,6 @@ export const Item: React.FC<ItemProps> = (props: ItemProps) => {
                 </div>
                 <div className="d-flex">
                     <div className="Buildpack-Namespace">{props.buildpack.namespace}</div>
-                    {/*<div className="Buildpack-Updated ml-auto font-italic text-muted"></div>/*/}
                 </div>
             </Card.Body>
         </Card>
