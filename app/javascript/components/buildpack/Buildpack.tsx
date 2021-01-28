@@ -21,8 +21,6 @@ class Buildpack extends React.Component<{match: {params: any}}, { buildpack: any
             const response: AxiosResponse = await Axios.get(`https://cnb-registry-api.herokuapp.com/api/v1/buildpacks/${ns}/${name}`);
             if (response.status >= 200 && response.status < 300) {
                 this.setState({ buildpack: response.data || {} });
-                console.log('API Response');
-                console.log(response.data);
             }
         } catch (error) {
             console.error(error);
@@ -31,24 +29,21 @@ class Buildpack extends React.Component<{match: {params: any}}, { buildpack: any
 
     render() {
         const buildpack = this.state.buildpack;
-        console.log('RENDER()');
-        console.log(buildpack);
         if (!this.state.buildpack) {
             return null;
         }
         return (
             <div className="">
                 <Header />
-                <Search />
                 <Card className="Buildpack-Item shadow-sm mb-3">
                     <Card.Body className="text-left">
                         <div className="mb-2">
                             <div>
                                 <span className="Buildpack-Name">{buildpack.latest.name}</span>
                                 <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-                                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-1">1.4</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">1.3</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-3">1.2</Dropdown.Item>
                                 </DropdownButton>
                             </div>
 
