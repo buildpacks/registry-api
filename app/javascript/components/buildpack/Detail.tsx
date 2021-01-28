@@ -34,10 +34,12 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
         }
         console.log(buildpack);
         const versionDropdownVersions = buildpack.versions.map(version => {
-            return <Dropdown.Item href={version._link}>{version.version}</Dropdown.Item>
+            return <Dropdown.Item key={version.version} href={version._link}>{version.version}</Dropdown.Item>
         });
 
-        console.log(versionDropdownVersions);
+        const supportedStacks = buildpack.latest.stacks.map(stack => {
+            return <Card key={stack} className="Buildpack-details-stacks shadow-sm"><Card.Subtitle>{stack}</Card.Subtitle></Card>
+        });
 
         return (
             <div>
@@ -46,21 +48,36 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                     <Container className="py-3">&nbsp;</Container>
                 </div>
                 <div className="Buildpack-details">
-                    <Card className="Buildpack-Item shadow-sm mb-3">
+                    <Card className="Buildpack-item shadow-sm mb-3">
                         <Card.Body className="text-left">
                             <div className="mb-2">
-                                <div>
-                                    <span className="Buildpack-Name">{buildpack.latest.name}</span>
+                                <div className="Buildpack-card-header">
+                                    <span className="Buildpack-name">{buildpack.latest.name}</span>
                                     <DropdownButton id="dropdown-basic-button" title="versions">
                                         {versionDropdownVersions}
                                     </DropdownButton>
                                 </div>
-
-                                <span
-                                    className="font-italic text-muted pl-2">{buildpack.latest.version}</span>
+                                <span className="font-italic text-muted pl-2">{buildpack.latest.version}</span>
                             </div>
                             <div className="d-flex">
                                 <div>{buildpack.latest.namespace}</div>
+                            </div>
+                            <hr/>
+                            <div className="Buildpack-details-meta">
+                                <div>
+                                    <Card.Title>
+                                        Usage
+                                    </Card.Title>
+                                    <code>pack build myapp --buildpack {buildpack.latest.ns}/{buildpack.latest.name}</code>
+                                </div>
+                                <div>
+                                    <Card.Title>
+                                        Supported Stacks
+                                        <div>
+                                            {supportedStacks}
+                                        </div>
+                                    </Card.Title>
+                                </div>
                             </div>
                         </Card.Body>
                     </Card>
