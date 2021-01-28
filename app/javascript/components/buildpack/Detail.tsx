@@ -68,7 +68,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                                     <Card.Title>
                                         Usage
                                     </Card.Title>
-                                    <code>pack build myapp --buildpack {buildpack.latest.ns}/{buildpack.latest.name}</code>
+                                    <code>pack build myapp --buildpack {buildpack.latest.namespace}/{buildpack.latest.name}</code>
                                 </div>
                                 <div>
                                     <Card.Title>
