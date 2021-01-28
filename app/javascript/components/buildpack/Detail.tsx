@@ -34,7 +34,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
         }
         console.log(buildpack);
         const versionDropdownVersions = buildpack.versions.map(version => {
-            return <Dropdown.Item href="#/action-1">{version.version}</Dropdown.Item>
+            return <Dropdown.Item href={version._link}>{version.version}</Dropdown.Item>
         });
 
         console.log(versionDropdownVersions);
