@@ -1,0 +1,50 @@
+.Buildpack-header {
+    background-color: #252960;
+    padding: .5em;
+}
+
+.Buildpack-details {
+    display: flex;
+    flex-direction: column;
+    padding: .5em;
+}
+
+.Buildpack-item {
+    font-size: .8rem;
+
+    .Buildpack-name {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+}
+
+.Buildpack-card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+code {
+    font-family: monospace,monospace;
+    height: 3em;
+    display: flex;
+    background-color: lightgray;
+    color: black;
+    border-radius: 5px;
+    font-size: 1.2em;
+    padding: 12px;
+}
+
+.Buildpack-details-meta {
+    display: flex;
+    flex-direction: column;
+    div {
+        padding-top: .5em;
+    }
+}
+
+.Buildpack-details-stacks {
+    font-size: .8rem;
+    padding-left: .5em;
+    padding-bottom: 2.5em;
+    color: #252960;
+}
