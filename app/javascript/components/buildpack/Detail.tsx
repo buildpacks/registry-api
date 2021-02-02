@@ -3,7 +3,7 @@ import './Detail.scss';
 import React from "react";
 import Header from "../common/Header";
 import Axios, {AxiosResponse} from "axios";
-import {Card, Container, Dropdown, DropdownButton} from "react-bootstrap";
+import {Card, Container, Dropdown, DropdownButton, ListGroup} from "react-bootstrap";
 
 class Detail extends React.Component<{match: {params: any}}, { buildpack: any }> {
     constructor(props: any) {
@@ -15,8 +15,6 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
 
     async componentDidMount() {
         const {ns, name} = this.props.match.params;
-        console.log(ns);
-        console.log(name);
         try {
             const response: AxiosResponse = await Axios.get(`https://cnb-registry-api.herokuapp.com/api/v1/buildpacks/${ns}/${name}`);
             if (response.status >= 200 && response.status < 300) {
@@ -32,13 +30,13 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
         if (!this.state.buildpack) {
             return null;
         }
-        console.log(buildpack);
+
         const versionDropdownVersions = buildpack.versions.map(version => {
             return <Dropdown.Item key={version.version} href={version._link}>{version.version}</Dropdown.Item>
         });
 
         const supportedStacks = buildpack.latest.stacks.map(stack => {
-            return <Card key={stack} className="Buildpack-details-stacks shadow-sm"><Card.Subtitle>{stack}</Card.Subtitle></Card>
+            return <ListGroup.Item key={stack} className="Buildpack-details-supported-stack-item">{stack}</ListGroup.Item>
         });
 
         return (
@@ -70,12 +68,12 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                                     </Card.Title>
                                     <code>pack build myapp --buildpack {buildpack.latest.namespace}/{buildpack.latest.name}</code>
                                 </div>
-                                <div>
+                                <div className="Buildpack-details-supported-stacks">
                                     <Card.Title>
                                         Supported Stacks
-                                        <div>
+                                        <ListGroup horizontal>
                                             {supportedStacks}
-                                        </div>
+                                        </ListGroup>
                                     </Card.Title>
                                 </div>
                             </div>
