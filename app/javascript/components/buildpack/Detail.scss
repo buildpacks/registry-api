@@ -30,8 +30,9 @@ code {
     background-color: lightgray;
     color: black;
     border-radius: 5px;
-    font-size: 1.2em;
+    font-size: 1.1em;
     padding: 12px;
+    width: 45em;
 }
 
 .Buildpack-details-meta {
@@ -42,9 +43,11 @@ code {
     }
 }
 
-.Buildpack-details-stacks {
-    font-size: .8rem;
-    padding-left: .5em;
-    padding-bottom: 2.5em;
+.Buildpack-details-supported-stacks {
+    margin-top: 1em;
+}
+
+.Buildpack-details-supported-stack-item {
+    font-size: .8em;
     color: #252960;
 }
