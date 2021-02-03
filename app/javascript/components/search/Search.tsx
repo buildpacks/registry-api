@@ -6,7 +6,7 @@ import {Container, FormControl, InputGroup, Spinner} from 'react-bootstrap';
 import { Item as BuildpackItem } from '../buildpack/Item';
 import { Summary } from './Summary';
 
-const apiHost = process.env['CNB_API_HOST'] || 'https://cnb-registry-api.herokuapp.com';
+let apiHost = process.env.CNB_API_HOST || 'https://cnb-registry-api.herokuapp.com';
 
 function SearchList(props: any) {
     let i = 0;

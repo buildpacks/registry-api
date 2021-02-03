@@ -5,7 +5,7 @@ import Header from "../common/Header";
 import Axios, {AxiosResponse} from "axios";
 import {Card, Container, Dropdown, DropdownButton, ListGroup} from "react-bootstrap";
 
-const apiHost = process.env['CNB_API_HOST'] || 'https://cnb-registry-api.herokuapp.com';
+let apiHost = process.env.CNB_API_HOST || 'https://cnb-registry-api.herokuapp.com';
 
 class Detail extends React.Component<{match: {params: any}}, { buildpack: any }> {
     constructor(props: any) {

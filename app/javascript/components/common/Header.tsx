@@ -5,7 +5,11 @@ import './Header.scss';
 import { Container } from 'react-bootstrap';
 
 const Header: React.FC = () => {
-    const hostURL = process.env['APPLICATION_HOST'] || 'http://localhost:3000';
+    let hostURL = process.env.APPLICATION_HOST || `https://${process.env.HEROKU_APP_NAME}.herokuapp.com`;
+    if (!process.env.HEROKU_APP_NAME) {
+        hostURL = 'http://localhost:3000';
+    }
+
     return (
         <header className="Header">
             <Container>
