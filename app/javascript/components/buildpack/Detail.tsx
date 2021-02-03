@@ -5,8 +5,6 @@ import Header from "../common/Header";
 import Axios, {AxiosResponse} from "axios";
 import {Card, Container, Dropdown, DropdownButton, ListGroup} from "react-bootstrap";
 
-let apiHost = process.env.CNB_API_HOST || 'https://cnb-registry-api.herokuapp.com';
-
 class Detail extends React.Component<{match: {params: any}}, { buildpack: any }> {
     constructor(props: any) {
         super(props);
@@ -16,6 +14,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
     }
 
     async componentDidMount() {
+        const apiHost = process.env.CNB_API_HOST || 'https://cnb-registry-api.herokuapp.com';
         const {ns, name} = this.props.match.params;
         try {
             const response: AxiosResponse = await Axios.get(`${apiHost}/api/v1/buildpacks/${ns}/${name}`);

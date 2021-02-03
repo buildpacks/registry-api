@@ -6,8 +6,6 @@ import {Container, FormControl, InputGroup, Spinner} from 'react-bootstrap';
 import { Item as BuildpackItem } from '../buildpack/Item';
 import { Summary } from './Summary';
 
-let apiHost = process.env.CNB_API_HOST || 'https://cnb-registry-api.herokuapp.com';
-
 function SearchList(props: any) {
     let i = 0;
     const items = props.searchItems.map((item: any) => {
@@ -80,6 +78,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
         }
 
         try {
+            const apiHost = process.env.CNB_API_HOST || 'https://cnb-registry-api.herokuapp.com';
             const response: AxiosResponse = await Axios.get(`${apiHost}/api/v1/search?matches=${searchText}`);
             if (response.status >= 200 && response.status < 300) {
                 this.setState({
