@@ -5,6 +5,8 @@ import Header from "../common/Header";
 import Axios, {AxiosResponse} from "axios";
 import {Card, Container, Dropdown, DropdownButton, ListGroup} from "react-bootstrap";
 
+const apiHost = process.env['CNB_API_HOST'] || 'https://cnb-registry-api.herokuapp.com';
+
 class Detail extends React.Component<{match: {params: any}}, { buildpack: any }> {
     constructor(props: any) {
         super(props);
@@ -16,7 +18,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
     async componentDidMount() {
         const {ns, name} = this.props.match.params;
         try {
-            const response: AxiosResponse = await Axios.get(`https://cnb-registry-api.herokuapp.com/api/v1/buildpacks/${ns}/${name}`);
+            const response: AxiosResponse = await Axios.get(`${apiHost}/api/v1/buildpacks/${ns}/${name}`);
             if (response.status >= 200 && response.status < 300) {
                 this.setState({ buildpack: response.data || {} });
             }

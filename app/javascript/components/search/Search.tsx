@@ -2,10 +2,11 @@ import './Search.scss';
 
 import React from 'react';
 import Axios, { AxiosResponse } from 'axios';
-import Loader from "react-spinners/RotateLoader";
-import { Container, FormControl, InputGroup } from 'react-bootstrap';
+import {Container, FormControl, InputGroup, Spinner} from 'react-bootstrap';
 import { Item as BuildpackItem } from '../buildpack/Item';
 import { Summary } from './Summary';
+
+const apiHost = process.env['CNB_API_HOST'] || 'https://cnb-registry-api.herokuapp.com';
 
 function SearchList(props: any) {
     let i = 0;
@@ -33,6 +34,8 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
     }
 
     render() {
+        const spinner =  this.state.loading ? <Spinner animation="border" className="Spinner" /> : null;
+
         let summary = <Summary totalCount={this.state.searchResults.length} searchTerm={this.state.searchTerm} />;
         if (this.state.loading || (this.state.searchResults.length === 0 && this.state.searchTerm === '')) {
             summary = null;
@@ -51,11 +54,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
                         </InputGroup>
                     </Container>
                 </div>
-                <Loader
-                    size={60}
-                    color={"#47529E"}
-                    loading={this.state.loading}
-                />
+                {spinner}
                 <Container>
                     {summary}
                     <SearchList searchItems={this.state.searchResults} />
@@ -81,7 +80,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
         }
 
         try {
-            const response: AxiosResponse = await Axios.get(`https://cnb-registry-api.herokuapp.com/api/v1/search?matches=${searchText}`);
+            const response: AxiosResponse = await Axios.get(`${apiHost}/api/v1/search?matches=${searchText}`);
             if (response.status >= 200 && response.status < 300) {
                 this.setState({
                     searchResults: response.data || [],
