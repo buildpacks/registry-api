@@ -1,9 +1,10 @@
 import './Detail.scss';
 
-import React from "react";
-import Header from "../common/Header";
-import Axios, {AxiosResponse} from "axios";
-import {Card, Container, Dropdown, DropdownButton, ListGroup} from "react-bootstrap";
+import React from 'react';
+import Header from '../common/Header';
+import Axios, {AxiosResponse} from 'axios';
+import {Card, Container, Dropdown, DropdownButton, ListGroup} from 'react-bootstrap';
+import GithubIcon from './GitHub-Mark-64px.png';
 
 class Detail extends React.Component<{match: {params: any}}, { buildpack: any }> {
     constructor(props: any) {
@@ -40,6 +41,36 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
             return <ListGroup.Item key={stack} className="Buildpack-details-supported-stack-item">{stack}</ListGroup.Item>
         });
 
+        const description = () => {
+            // if (!this.state.buildpack.latest.description) {
+            //     return null;
+            // }
+
+            return <div>
+                <Card.Title>
+                    Description
+                </Card.Title>
+                <Card.Text>
+                    {this.state.buildpack.latest.description}
+                </Card.Text>
+            </div>;
+        }
+
+        const license = () => {
+            // if (!this.state.buildpack.latest.license) {
+            //     return null;
+            // }
+
+            return <div>
+                <Card.Title>
+                    License
+                </Card.Title>
+                <Card.Text>
+                    {this.state.buildpack.latest.license}
+                </Card.Text>
+            </div>;
+        }
+
         return (
             <div>
                 <Header/>
@@ -51,7 +82,10 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                         <Card.Body className="text-left">
                             <div className="mb-2">
                                 <div className="Buildpack-card-header">
-                                    <span className="Buildpack-name">{buildpack.latest.name}</span>
+                                    <div>
+                                        <span className="Buildpack-name">{buildpack.latest.name}</span>
+                                        <a href={buildpack.latest.homepage}><img src={GithubIcon} /></a>
+                                    </div>
                                     <DropdownButton id="dropdown-basic-button" title="versions">
                                         {versionDropdownVersions}
                                     </DropdownButton>
@@ -63,11 +97,12 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                             </div>
                             <hr/>
                             <div className="Buildpack-details-meta">
+                                {description()}
                                 <div>
                                     <Card.Title>
                                         Usage
                                     </Card.Title>
-                                    <code>pack build myapp --buildpack {buildpack.latest.namespace}/{buildpack.latest.name}</code>
+                                    <code>pack build myapp --buildpack {buildpack.latest.namespace}/{buildpack.latest.name}@{buildpack.latest.version}</code>
                                 </div>
                                 <div className="Buildpack-details-supported-stacks">
                                     <Card.Title>
@@ -77,6 +112,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                                         </ListGroup>
                                     </Card.Title>
                                 </div>
+                                {license()}
                             </div>
                         </Card.Body>
                     </Card>
