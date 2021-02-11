@@ -104,6 +104,12 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                                     </Card.Title>
                                     <code>pack build myapp --buildpack {buildpack.latest.namespace}/{buildpack.latest.name}@{buildpack.latest.version}</code>
                                 </div>
+                                <div>
+                                    <Card.Title>
+                                        URI
+                                    </Card.Title>
+                                    <code>{`urn:cnb:registry:${buildpack.latest.namespace}/${buildpack.latest.name}`}</code>
+                                </div>
                                 <div className="Buildpack-details-supported-stacks">
                                     <Card.Title>
                                         Supported Stacks
