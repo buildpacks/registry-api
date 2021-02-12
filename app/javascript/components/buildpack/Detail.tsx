@@ -84,7 +84,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                                 <div className="Buildpack-card-header">
                                     <div>
                                         <span className="Buildpack-name">{buildpack.latest.name}</span>
-                                        <a href={buildpack.latest.homepage}><img src={GithubIcon} /></a>
+                                        <a href={buildpack.latest.homepage}><img src={GithubIcon} className="Buildpack-github-icon" /></a>
                                     </div>
                                     <DropdownButton id="dropdown-basic-button" title="versions">
                                         {versionDropdownVersions}
