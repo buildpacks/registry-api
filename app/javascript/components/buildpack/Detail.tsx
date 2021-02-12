@@ -66,7 +66,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                     License
                 </Card.Title>
                 <Card.Text>
-                    {this.state.buildpack.latest.license}
+                    {this.state.buildpack.latest.license ?? 'Unknown'}
                 </Card.Text>
             </div>;
         }
