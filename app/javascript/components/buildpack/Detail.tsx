@@ -5,6 +5,7 @@ import Header from '../common/Header';
 import Axios, {AxiosResponse} from 'axios';
 import {Card, Container, Dropdown, DropdownButton, ListGroup} from 'react-bootstrap';
 import GithubIcon from './GitHub-Mark-64px.png';
+import LinkIcon from './Link-64px.png';
 
 class Detail extends React.Component<{match: {params: any}}, { buildpack: any }> {
     constructor(props: any) {
@@ -32,6 +33,8 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
         if (!this.state.buildpack) {
             return null;
         }
+        // Extract hostname and compare
+        const isGithub = buildpack.latest.homepage.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)?.[1] === 'github.com';
 
         const versionDropdownVersions = buildpack.versions.map(version => {
             return <Dropdown.Item key={version.version} href={version._link}>{version.version}</Dropdown.Item>
@@ -84,7 +87,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                                 <div className="Buildpack-card-header">
                                     <div>
                                         <span className="Buildpack-name">{buildpack.latest.name}</span>
-                                        <a href={buildpack.latest.homepage}><img src={GithubIcon} className="Buildpack-github-icon" /></a>
+                                        <a href={buildpack.latest.homepage}><img src={isGithub ? GithubIcon : LinkIcon} className="Buildpack-homepage-icon" /></a>
                                     </div>
                                     <DropdownButton id="dropdown-basic-button" title="versions">
                                         {versionDropdownVersions}
