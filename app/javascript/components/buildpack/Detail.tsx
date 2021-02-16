@@ -33,8 +33,12 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
         if (!this.state.buildpack) {
             return null;
         }
+
         // Extract hostname and compare
         const isGithub = buildpack.latest.homepage.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)?.[1] === 'github.com';
+        const homepageLink = !buildpack.latest.homepage
+            ? null
+            : <a href={buildpack.latest.homepage}><img src={isGithub ? GithubIcon : LinkIcon} className="Buildpack-homepage-icon" /></a>
 
         const versionDropdownVersions = buildpack.versions.map(version => {
             return <Dropdown.Item key={version.version} href={version._link}>{version.version}</Dropdown.Item>
@@ -45,9 +49,9 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
         });
 
         const description = () => {
-            // if (!this.state.buildpack.latest.description) {
-            //     return null;
-            // }
+            if (!this.state.buildpack.latest.description) {
+                return null;
+            }
 
             return <div>
                 <Card.Title>
@@ -60,10 +64,6 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
         }
 
         const license = () => {
-            // if (!this.state.buildpack.latest.license) {
-            //     return null;
-            // }
-
             return <div>
                 <Card.Title>
                     License
@@ -87,7 +87,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                                 <div className="Buildpack-card-header">
                                     <div>
                                         <span className="Buildpack-name">{buildpack.latest.name}</span>
-                                        <a href={buildpack.latest.homepage}><img src={isGithub ? GithubIcon : LinkIcon} className="Buildpack-homepage-icon" /></a>
+                                        {homepageLink}
                                     </div>
                                     <DropdownButton id="dropdown-basic-button" title="versions">
                                         {versionDropdownVersions}
