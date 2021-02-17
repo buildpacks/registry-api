@@ -193,8 +193,8 @@ DO
 	}
 
 	var licenses []string
-	for _, s := range m.Licenses {
-		stacks = append(stacks, s.Type)
+	for _, l := range m.Licenses {
+		licenses = append(licenses, l.Type)
 	}
 
 	version := strings.Split(m.Version, ".")
