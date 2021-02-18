@@ -28,7 +28,7 @@ class Api::V1::BuildpacksController < ApplicationController
         {
           "version": b.version,
           # TODO make the host a variable/constant
-          "_link": "https://registry.buildpacks.io/api/v1/buildpacks/#{b.namespace}/#{b.name}/#{b.version}"
+          "_link": "https://#{ENV.fetch('CNB_API_HOST') {'registry.buildpacks.io'}}/api/v1/buildpacks/#{b.namespace}/#{b.name}/#{b.version}"
         }
       end
 
