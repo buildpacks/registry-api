@@ -70,3 +70,8 @@ code {
     justify-content: flex-start;
     flex-flow: row wrap;
 }
+
+.dropdown-menu {
+    max-height: 25em;
+    overflow-y: auto;
+}
