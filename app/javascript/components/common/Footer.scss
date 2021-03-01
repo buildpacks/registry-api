@@ -1,0 +1,11 @@
+@import "../colors.scss";
+
+.Footer {
+  margin-top: 3rem;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  border-top: 3px solid $pink;
+  background-color: $blue;
+}
