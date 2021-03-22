@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root 'homepage#index'
 
+  get 'searches/:searchList', to: 'homepage#show'
+  # match '*path', to: 'homepage#index' via: :all
+
+
   namespace :buildpacks do
     get ':namespace/:name', to: '/homepage#show'
     get ':namespace/:name/version/:version', to: '/homepage#show'

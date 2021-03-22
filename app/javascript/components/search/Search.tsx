@@ -7,6 +7,8 @@ import { Item as BuildpackItem } from '../buildpack/Item';
 import { Summary } from './Summary';
 
 function SearchList(props: any) {
+    // const [searchItems, setSearchItems] = useState(props.searchItems);
+
     let i = 0;
     const items = props.searchItems.map((item: any) => {
         const newItem = { ...item.latest, ...{ key: i++ } };
@@ -32,6 +34,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
     }
 
     render() {
+        console.log("Render!!!");
         const spinner =  this.state.loading ? <Spinner animation="border" className="Spinner" /> : null;
 
         let summary = <Summary totalCount={this.state.searchResults.length} searchTerm={this.state.searchTerm} />;
@@ -79,7 +82,8 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
 
         try {
             const apiHost = process.env.CNB_API_HOST || 'https://cnb-registry-api.herokuapp.com';
-            const response: AxiosResponse = await Axios.get(`${apiHost}/api/v1/search?matches=${searchText}`);
+            const link = `${apiHost}/api/v1/search?matches=${searchText}`;
+            const response: AxiosResponse = await Axios.get(link);
             if (response.status >= 200 && response.status < 300) {
                 this.setState({
                     searchResults: response.data || [],
