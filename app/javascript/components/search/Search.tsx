@@ -5,14 +5,10 @@ import Axios, { AxiosResponse } from 'axios';
 import {Container, FormControl, InputGroup, Spinner} from 'react-bootstrap';
 import { Item as BuildpackItem } from '../buildpack/Item';
 import { Summary } from './Summary';
-// import { BrowserRouter as Router, Redirect } from 'react-router-dom';
-// import {History, LocationState} from 'history';
 import {withRouter} from 'react-router-dom';
-// import {History} from 'history';
 import {RouteComponentProps} from 'react-router-dom';
 
 function SearchList(props: any) {
-    // const [searchItems, setSearchItems] = useState(props.searchItems);
 
     let i = 0;
     const items = props.searchItems.map((item: any) => {
@@ -26,10 +22,6 @@ function SearchList(props: any) {
         </div>
     );
 }
-
-// interface SearchProps{
-//     history : History
-// }
 
 type HomeProps = RouteComponentProps;
 
