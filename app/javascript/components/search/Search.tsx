@@ -5,6 +5,11 @@ import Axios, { AxiosResponse } from 'axios';
 import {Container, FormControl, InputGroup, Spinner} from 'react-bootstrap';
 import { Item as BuildpackItem } from '../buildpack/Item';
 import { Summary } from './Summary';
+// import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+// import {History, LocationState} from 'history';
+import {withRouter} from 'react-router-dom';
+// import {History} from 'history';
+import {RouteComponentProps} from 'react-router-dom';
 
 function SearchList(props: any) {
     // const [searchItems, setSearchItems] = useState(props.searchItems);
@@ -22,8 +27,14 @@ function SearchList(props: any) {
     );
 }
 
-class Search extends React.Component<{}, { searchTerm: string, searchResults: any[], loading: boolean }> {
-    constructor(props: any) {
+// interface SearchProps{
+//     history : History
+// }
+
+type HomeProps = RouteComponentProps;
+
+class Search extends React.Component<{}, { searchTerm: string, searchResults: any[], loading: boolean }, HomeProps> {
+    constructor(props: HomeProps) {
         super(props);
         this.keyPressed = this.keyPressed.bind(this);
         this.state = {
@@ -33,8 +44,11 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
         }
     }
 
+    componentDidMount(){
+        console.log(this.props)
+    }
+
     render() {
-        console.log("Render!!!");
         const spinner =  this.state.loading ? <Spinner animation="border" className="Spinner" /> : null;
 
         let summary = <Summary totalCount={this.state.searchResults.length} searchTerm={this.state.searchTerm} />;
@@ -42,6 +56,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
             summary = null;
         }
 
+       
         return (
             <div className="Search">
                 <div className="Search-header">
@@ -65,13 +80,19 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
     }
 
     async keyPressed(e: any) {
+        
         if (e.keyCode === 13) {
             this.setState({
                 searchTerm: e.target.value,
                 searchResults: [],
                 loading: e.target.value !== ''
             });
+            
             await this.fetchSearchResults(e.target.value);
+            
+            const link:string = '/searches'+e.target.value;
+            this.props.history.push(`/searches/${e.target.value}`)
+            
         }
     }
 
@@ -96,4 +117,4 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
     }
 }
 
-export default Search;
+export default withRouter(Search);

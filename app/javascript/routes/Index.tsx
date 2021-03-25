@@ -7,7 +7,7 @@ export default (
     <Router>
         <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/searches/:searchList" component={Home} />
+            <Route path="/searches/:sL" exact component={Home} />
             <Route path="/buildpacks/:ns/:name" exact component={Detail} />
         </Switch>
     </Router>
