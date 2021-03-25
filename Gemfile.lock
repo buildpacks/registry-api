@@ -104,6 +104,7 @@ GEM
       minitest (>= 5.0)
       ruby-progressbar
     mocha (1.12.0)
+    newrelic_rpm (6.12.0.367)
     nio4r (2.5.4)
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
@@ -227,6 +228,7 @@ DEPENDENCIES
   listen (~> 3.3)
   minitest-reporters
   mocha
+  newrelic_rpm
   pg
   prmd
   puma (~> 5.0)

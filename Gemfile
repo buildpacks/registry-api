@@ -3,23 +3,24 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.2'
 
-gem 'rails', '~> 6.1.0'
+gem 'committee'
+gem 'newrelic_rpm'
 gem 'pg'
 gem 'puma', '~> 5.0'
+gem 'rack-attack'
+gem 'rack-cors'
+gem 'rails', '~> 6.1.0'
+gem 'rollbar'
 gem 'sass-rails', '>= 6'
 gem 'toml'
-gem 'committee'
-gem 'rollbar'
-gem 'rack-cors'
-gem 'rack-attack'
 gem 'webpacker', '~> 5.2', '>= 5.2.1'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'prmd'
   gem 'dotenv-rails'
   gem 'minitest-reporters'
   gem 'mocha'
+  gem 'prmd'
   gem 'rubocop'
   gem 'simplecov'
   gem 'vcr'
