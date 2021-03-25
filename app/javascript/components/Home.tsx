@@ -9,7 +9,11 @@ import Header from "./common/Header";
 import Search from "./search/Search";
 import Footer from "./common/Footer";
 
-function App() {
+
+class App extends React.Component<{match: {params: any}}>{
+    render(){
+        const {sL} = this.props.match.params;
+        
     return (
         <div className="App">
             <Header />
@@ -72,7 +76,7 @@ function App() {
             </Container>
             <Footer />
         </div>
-    );
+    );}
 }
 
 export default App;

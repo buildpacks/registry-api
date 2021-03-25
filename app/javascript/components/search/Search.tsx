@@ -5,8 +5,11 @@ import Axios, { AxiosResponse } from 'axios';
 import {Container, FormControl, InputGroup, Spinner} from 'react-bootstrap';
 import { Item as BuildpackItem } from '../buildpack/Item';
 import { Summary } from './Summary';
+import {withRouter} from 'react-router-dom';
+import {RouteComponentProps} from 'react-router-dom';
 
 function SearchList(props: any) {
+
     let i = 0;
     const items = props.searchItems.map((item: any) => {
         const newItem = { ...item.latest, ...{ key: i++ } };
@@ -20,15 +23,25 @@ function SearchList(props: any) {
     );
 }
 
-class Search extends React.Component<{}, { searchTerm: string, searchResults: any[], loading: boolean }> {
-    constructor(props: any) {
+type HomeProps = RouteComponentProps;
+
+class Search extends React.Component<{}, { searchTerm: string, searchResults: any[], loading: boolean, formValue: string }, HomeProps> {
+    constructor(props: HomeProps) {
         super(props);
         this.keyPressed = this.keyPressed.bind(this);
         this.state = {
             searchTerm: "",
             searchResults: [],
-            loading: false
+            loading: false,
+            formValue: ''
         }
+    }
+
+    componentDidMount(){
+        console.log(this.props.match.params.sL);
+
+        if(this.props.match.params.sL){
+        this.reload(this.props.match.params.sL);}
     }
 
     render() {
@@ -39,6 +52,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
             summary = null;
         }
 
+       
         return (
             <div className="Search">
                 <div className="Search-header">
@@ -48,6 +62,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
                                 placeholder="Search buildpacks"
                                 aria-label="Search buildpacks"
                                 size="lg"
+                                defaultValue={this.state.formValue}
                             />
                         </InputGroup>
                     </Container>
@@ -60,16 +75,32 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
             </div>
         );
     }
-
+    
     async keyPressed(e: any) {
+        
         if (e.keyCode === 13) {
+
+            this.props.history.push(`/searches/${e.target.value}`)
+            
             this.setState({
                 searchTerm: e.target.value,
                 searchResults: [],
                 loading: e.target.value !== ''
             });
+            
             await this.fetchSearchResults(e.target.value);
+            
+            
+            
         }
+    }
+
+    async reload(a:any){
+        this.setState({
+            formValue: a
+        });
+        
+        await this.fetchSearchResults(a);
     }
 
     async fetchSearchResults(searchText: string) {
@@ -79,7 +110,8 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
 
         try {
             const apiHost = process.env.CNB_API_HOST || 'https://cnb-registry-api.herokuapp.com';
-            const response: AxiosResponse = await Axios.get(`${apiHost}/api/v1/search?matches=${searchText}`);
+            const link = `${apiHost}/api/v1/search?matches=${searchText}`;
+            const response: AxiosResponse = await Axios.get(link);
             if (response.status >= 200 && response.status < 300) {
                 this.setState({
                     searchResults: response.data || [],
@@ -92,4 +124,4 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
     }
 }
 
-export default Search;
+export default withRouter(Search);
