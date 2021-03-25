@@ -33,19 +33,23 @@ function SearchList(props: any) {
 
 type HomeProps = RouteComponentProps;
 
-class Search extends React.Component<{}, { searchTerm: string, searchResults: any[], loading: boolean }, HomeProps> {
+class Search extends React.Component<{}, { searchTerm: string, searchResults: any[], loading: boolean, formValue: string }, HomeProps> {
     constructor(props: HomeProps) {
         super(props);
         this.keyPressed = this.keyPressed.bind(this);
         this.state = {
             searchTerm: "",
             searchResults: [],
-            loading: false
+            loading: false,
+            formValue: ''
         }
     }
 
     componentDidMount(){
-        console.log(this.props)
+        console.log(this.props.match.params.sL);
+
+        if(this.props.match.params.sL){
+        this.reload(this.props.match.params.sL);}
     }
 
     render() {
@@ -66,6 +70,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
                                 placeholder="Search buildpacks"
                                 aria-label="Search buildpacks"
                                 size="lg"
+                                defaultValue={this.state.formValue}
                             />
                         </InputGroup>
                     </Container>
@@ -78,10 +83,13 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
             </div>
         );
     }
-
+    
     async keyPressed(e: any) {
         
         if (e.keyCode === 13) {
+
+            this.props.history.push(`/searches/${e.target.value}`)
+            
             this.setState({
                 searchTerm: e.target.value,
                 searchResults: [],
@@ -90,10 +98,17 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
             
             await this.fetchSearchResults(e.target.value);
             
-            const link:string = '/searches'+e.target.value;
-            this.props.history.push(`/searches/${e.target.value}`)
+            
             
         }
+    }
+
+    async reload(a:any){
+        this.setState({
+            formValue: a
+        });
+        
+        await this.fetchSearchResults(a);
     }
 
     async fetchSearchResults(searchText: string) {
