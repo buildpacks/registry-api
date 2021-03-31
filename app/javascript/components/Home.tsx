@@ -63,7 +63,7 @@ class App extends React.Component<{match: {params: any}}>{
                             </Card.Body>
                         </Card>
                         <Card style={{border: 'none'}}>
-                            <Card.Title className='my-2'>Compatability</Card.Title>
+                            <Card.Title className='my-2'>Compatibility</Card.Title>
                             <Card.Img variant="top" className="mx-auto p-4" src={checkIcon} />
                             <Card.Body>
                                 <Card.Text>
