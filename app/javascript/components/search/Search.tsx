@@ -38,8 +38,6 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
     }
 
     componentDidMount(){
-        console.log(this.props.match.params.sL);
-
         if(this.props.match.params.sL){
         this.reload(this.props.match.params.sL);}
     }
@@ -51,7 +49,6 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
         if (this.state.loading || (this.state.searchResults.length === 0 && this.state.searchTerm === '')) {
             summary = null;
         }
-
        
         return (
             <div className="Search">

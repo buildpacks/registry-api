@@ -41,3 +41,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# This is a yarn project
+package-lock.json
