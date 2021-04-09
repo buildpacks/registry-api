@@ -74,22 +74,19 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
     }
     
     async keyPressed(e: any) {
-        
-        if (e.keyCode === 13) {
-
-            this.props.history.push(`/searches/${e.target.value}`)
-            
-            this.setState({
-                searchTerm: e.target.value,
-                searchResults: [],
-                loading: e.target.value !== ''
-            });
-            
-            await this.fetchSearchResults(e.target.value);
-            
-            
-            
+        const searchTerm = (e.target.value + '').trim();
+        if (searchTerm === '' || e.keyCode !== 13) {
+            return;
         }
+
+        this.props.history.push(`/searches/${searchTerm}`)
+        this.setState({
+            searchTerm,
+            searchResults: [],
+            loading: true
+        });
+
+        await this.fetchSearchResults(searchTerm);
     }
 
     async reload(a:any){
