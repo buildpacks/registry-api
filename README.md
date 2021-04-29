@@ -1,6 +1,7 @@
 # Buildpack Registry API
 
 ![CI](https://github.com/buildpacks/registry-api/workflows/CI/badge.svg)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4748/badge)](https://bestpractices.coreinfrastructure.org/projects/4748)
 
 This repository contains an application that exposes an API for interacting with the [Buildpack Registry](https://github.com/buildpacks/rfcs/blob/main/text/0032-update-json-cnb-registry.md).
 
