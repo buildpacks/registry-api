@@ -23,7 +23,7 @@ GET /search
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **matches** | *string* | keyword(s) to search for | `"java"`
+| **matches** | *string* | keyword(s) to search for | `"projectriff"`
 
 #### Request Example
 
