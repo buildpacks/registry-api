@@ -140,13 +140,12 @@ $ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-fun
 
 ## Development
 
-This project requires [Ruby](http://www.ruby-lang.org/en/) and [Golang](https://golang.org/) tooling.
+This project requires [Ruby](http://www.ruby-lang.org/en/), [Rails](http://rubyonrails.org/) and [Golang](https://golang.org/) tooling.
 
-Run the tests:
-
-```
-$ make test
-```
+1. Install Ruby determined by `.ruby-version` file.
+2. Install Rails and Golang.
+3. `bundle install` to install all the dependencies in your `Gemfile`
+4. `yarn install` to install all the dependencies in `yarn.lock` file
 
 This app uses [PostgreSQL](https://www.postgresql.org/). To set up the database, run:
 
@@ -154,7 +153,11 @@ This app uses [PostgreSQL](https://www.postgresql.org/). To set up the database,
 $ bundle exec rake db:create
 $ bundle exec rake db:migrate
 ```
+Run the tests:
 
+```
+$ make test
+```
 Then run the app:
 
 ```
