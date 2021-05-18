@@ -23,37 +23,46 @@ GET /search
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **matches** | *string* | keyword(s) to search for | `"java"`
+| **matches** | *string* | keyword(s) to search for | `"ruby"`
 
 #### Request Example
 
 ```sh-session
-$ curl "https://registry.buildpacks.io/api/v1/search?matches=projectriff"
+$ curl "https://registry.buildpacks.io/api/v1/search?matches=ruby"
 ```
 
 #### Response Example
 
 ```json
 [
-    {
-      "latest": {
-        "description": "The Command Function Buildpack is a Cloud Native Buildpack V3 that provides riff Command Function Invoker to functions",
-        "license": "MIT",
-        "ns":"projectriff",
-        "name":"command-function",
-        "version": "1.4.1",
-        "yanked":false,
-        "addr":"gcr.io/projectriff/command-function@sha256:99f9054abb73635a9b251b61d3627a8ff86508c767f9d691c426d45e8758596f"
-      },
-      "versions": {
-        "1.4.1": {
-          "link": "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.4.1"
-        },
-        "1.3.9": {
-          "link": "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.3.9"
-        }
+  {
+    "latest": {
+      "id": "a52bd991-0e17-46c0-a413-229b35943765",
+      "namespace": "heroku",
+      "name": "ruby",
+      "version": "0.1.0",
+      "addr": "public.ecr.aws/r2f9u0w4/heroku-ruby-buildpack@sha256:0f05ccc534c20fb54cc6f0c71df9b21b2952f74f528ed98f55d81c40434844fd",
+      "yanked": false,
+      "description": "",
+      "homepage": "",
+      "licenses": null,
+      "stacks": [
+        "heroku-18",
+        "heroku-20"
+      ],
+      "created_at": "2021-03-04T16:20:27.189Z",
+      "updated_at": "2021-05-16T04:24:52.556Z",
+      "version_major": "0",
+      "version_minor": "1",
+      "version_patch": "0"
+    },
+    "versions": [
+      {
+        "version": "0.1.0",
+        "_link": "https://registry.buildpacks.io/api/v1/buildpacks/heroku/ruby/0.1.0"
       }
-    }
+    ]
+  }
 ]
 ```
 
@@ -69,13 +78,13 @@ GET /buildpacks/:namespace/:name
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **namespace** | *string* | the namespace component from the ID of the buildpack | `"projectriff"`
-| **name** | *string* | the name component from the ID of the buildpack | `"command-function"`
+| **namespace** | *string* | the namespace component from the ID of the buildpack | `"heroku"`
+| **name** | *string* | the name component from the ID of the buildpack | `"ruby"`
 
 #### Request Example
 
 ```sh-session
-$ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function"
+$ curl "https://registry.buildpacks.io/api/v1/buildpacks/heroku/ruby"
 ```
 
 #### Response Example
@@ -83,22 +92,24 @@ $ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-fun
 ```json
 {
   "latest": {
-    "description": "The Command Function Buildpack is a Cloud Native Buildpack V3 that provides riff Command Function Invoker to functions",
-    "license": "MIT",
-    "ns":"projectriff",
-    "name":"command-function",
-    "version": "1.4.1",
-    "yanked":false,
-    "addr":"gcr.io/projectriff/command-function@sha256:99f9054abb73635a9b251b61d3627a8ff86508c767f9d691c426d45e8758596f"
+    "version": "0.1.0",
+    "namespace": "heroku",
+    "name": "ruby",
+    "description": "",
+    "homepage": "",
+    "licenses": null,
+    "stacks": [
+      "heroku-18",
+      "heroku-20"
+    ],
+    "id": "a52bd991-0e17-46c0-a413-229b35943765"
   },
-  "versions": {
-    "1.4.1": {
-      "link": "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.4.1"
-    },
-    "1.3.9": {
-      "link": "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.3.9"
+  "versions": [
+    {
+      "version": "0.1.0",
+      "_link": "https://registry.buildpacks.io//api/v1/buildpacks/heroku/ruby/0.1.0"
     }
-  }
+  ]
 }
 ```
 
@@ -114,39 +125,49 @@ GET /buildpacks/:namespace/:name/:version
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **namespace** | *string* | the namespace component from the ID of the buildpack | `"projectriff"`
-| **name** | *string* | the name component from the ID of the buildpack | `"command-function"`
-| **version** | *string* | the version of the buildpack | `"1.4.1"`
+| **namespace** | *string* | the namespace component from the ID of the buildpack | `"heroku"`
+| **name** | *string* | the name component from the ID of the buildpack | `"ruby"`
+| **version** | *string* | the version of the buildpack | `"0.1.0"`
 
 #### Request Example
 
 ```sh-session
-$ curl "https://registry.buildpacks.io/api/v1/buildpacks/projectriff/command-function/1.4.1"
+$ curl "https://registry.buildpacks.io/api/v1/buildpacks/heroku/ruby/0.1.0"
 ```
 
 #### Response Example
 
 ```json
 {
-  "description": "The Command Function Buildpack is a Cloud Native Buildpack V3 that provides riff Command Function Invoker to functions",
-  "license": "MIT",
-  "ns":"projectriff",
-  "name":"command-function",
-  "version": "1.4.1",
-  "yanked":false,
-  "addr":"gcr.io/projectriff/command-function@sha256:99f9054abb73635a9b251b61d3627a8ff86508c767f9d691c426d45e8758596f"
+  "id": "a52bd991-0e17-46c0-a413-229b35943765",
+  "namespace": "heroku",
+  "name": "ruby",
+  "version": "0.1.0",
+  "addr": "public.ecr.aws/r2f9u0w4/heroku-ruby-buildpack@sha256:0f05ccc534c20fb54cc6f0c71df9b21b2952f74f528ed98f55d81c40434844fd",
+  "yanked": false,
+  "description": "",
+  "homepage": "",
+  "licenses": null,
+  "stacks": [
+    "heroku-18",
+    "heroku-20"
+  ],
+  "created_at": "2021-03-04T16:20:27.189Z",
+  "updated_at": "2021-05-16T04:30:10.652Z",
+  "version_major": "0",
+  "version_minor": "1",
+  "version_patch": "0"
 }
 ```
 
 ## Development
 
-This project requires [Ruby](http://www.ruby-lang.org/en/) and [Golang](https://golang.org/) tooling.
+This project requires [Ruby](http://www.ruby-lang.org/en/), [Rails](http://rubyonrails.org/) and [Golang](https://golang.org/) tooling.
 
-Run the tests:
-
-```
-$ make test
-```
+1. Install Ruby determined by `.ruby-version` file.
+2. Install Rails and Golang.
+3. `bundle install` to install all the dependencies in your `Gemfile`
+4. `yarn install` to install all the dependencies in `yarn.lock` file
 
 This app uses [PostgreSQL](https://www.postgresql.org/). To set up the database, run:
 
@@ -154,7 +175,11 @@ This app uses [PostgreSQL](https://www.postgresql.org/). To set up the database,
 $ bundle exec rake db:create
 $ bundle exec rake db:migrate
 ```
+Run the tests:
 
+```
+$ make test
+```
 Then run the app:
 
 ```
