@@ -17,7 +17,7 @@
     "@types/node": "^12.19.3",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "axios": "^0.21.0",
+    "axios": "^0.21.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "^4.5.3",
     "cookie-parser": "~1.4.4",
