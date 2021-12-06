@@ -36,9 +36,12 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
 
         // Extract hostname and compare
         const isGithub = buildpack.latest.homepage.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)?.[1] === 'github.com';
-        const homepageLink = !buildpack.latest.homepage
+        const homepageIcon = !buildpack.latest.homepage
             ? null
             : <a href={buildpack.latest.homepage}><img src={isGithub ? GithubIcon : LinkIcon} className="Buildpack-homepage-icon" /></a>
+        const homepageLink = !buildpack.latest.homepage
+            ? null
+            : <a href={buildpack.latest.homepage}>Homepage</a>
 
         const versionDropdownVersions = buildpack.versions.map(version => {
             return <Dropdown.Item key={version.version} href={version._link}>{version.version}</Dropdown.Item>
@@ -74,6 +77,17 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
             </div>;
         }
 
+        const links = () => {
+            return <div>
+                <Card.Title>
+                    Links
+                </Card.Title>
+                <Card.Text>
+                    {homepageLink ?? 'None'}
+                </Card.Text>
+            </div>;
+        }
+
         return (
             <div>
                 <Header/>
@@ -87,7 +101,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                                 <div className="Buildpack-card-header">
                                     <div>
                                         <span className="Buildpack-name">{buildpack.latest.name}</span>
-                                        {homepageLink}
+                                        {homepageIcon}
                                     </div>
                                     <DropdownButton id="dropdown-basic-button" title="versions">
                                         {versionDropdownVersions}
@@ -122,6 +136,7 @@ class Detail extends React.Component<{match: {params: any}}, { buildpack: any }>
                                     </Card.Title>
                                 </div>
                                 {license()}
+                                {links()}
                             </div>
                         </Card.Body>
                     </Card>
