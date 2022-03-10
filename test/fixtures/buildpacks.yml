@@ -3,13 +3,16 @@
 one:
   namespace: example
   name: first
-  version: "1.0.0"
+  version: "1.9.0"
   addr: MyString
   yanked: false
   description: MyText
   homepage: MyText
   licenses: [MyText]
   stacks: [MyText]
+  version_major: "1"
+  version_minor: "9"
+  version_patch: "0"
 
 two:
   namespace: example
@@ -21,3 +24,20 @@ two:
   homepage: MyText
   licenses: [MyText]
   stacks: [MyText]
+  version_major: "1"
+  version_minor: "0"
+  version_patch: "0"
+
+three:
+  namespace: example
+  name: first
+  version: "1.10.0"
+  addr: MyString
+  yanked: false
+  description: MyText
+  homepage: MyText
+  licenses: [MyText]
+  stacks: [MyText]
+  version_major: "1"
+  version_minor: "10"
+  version_patch: "0"
