@@ -16,9 +16,9 @@ class Api::V1::BuildpacksController < ApplicationController
       :id
     ).
     where(buildpack_params).order(
-      version_major: :desc,
-      version_minor: :desc,
-      version_patch: :desc,
+      'version_major::integer DESC',
+      'version_minor::integer DESC',
+      'version_patch::integer DESC',
     )
 
     if buildpacks.empty?
