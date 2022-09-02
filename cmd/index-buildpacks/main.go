@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/lib/pq"
 
@@ -70,7 +71,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	buildIndex(entries)
+	numOfEntries := len(entries)
+	start := 0
+	sliceSize := 100
+	for start+sliceSize < numOfEntries {
+		buildIndex(entries[start : start+sliceSize])
+		fmt.Println("at=index_buildpack level=info msg='sleep(5) to avoid 429'")
+		time.Sleep(5 * time.Second) // sleep to avoid 429 from registry
+		start = start + sliceSize
+	}
+	buildIndex(entries[start:numOfEntries])
 	fmt.Println("at=index_buildpack level=info msg='done updating index'")
 }
 
