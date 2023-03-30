@@ -11,7 +11,7 @@ require (
 	github.com/google/go-containerregistry v0.2.1
 	github.com/lib/pq v1.8.0
 	github.com/onsi/gomega v1.9.0
-	github.com/opencontainers/runc v1.1.2 // indirect
+	github.com/opencontainers/runc v1.1.5 // indirect
 	github.com/sclevine/spec v1.2.0
 	github.com/stretchr/testify v1.5.1
 )
