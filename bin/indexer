@@ -5,7 +5,6 @@ const execa = require('execa');
 const path = require('path');
 const os = require('os');
 
-
 (async () => {
     await registryLogin();
     let tempPath = execa.sync('mktemp', ['-d']).stdout
@@ -101,6 +100,7 @@ async function createUpdateRepo(repoPath) {
 
     return true;
 }
+
 // Create or update ~/.docker/config with credentials from the environment.
 // Adding credentials to this file allows the indexer to login to remote
 // registries and access higher rate limits.
