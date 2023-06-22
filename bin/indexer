@@ -136,11 +136,11 @@ async function registryLogin() {
     let dockerhubToken = process.env.DOCKERHUB_TOKEN;
     let dockerhubEmail = process.env.DOCKERHUB_EMAIL;
     let dockerhubAuth = Buffer.from(`${dockerhubUser}:${dockerhubToken}`).toString('base64');
-    let dockerhubCfg = { auth: dockerhubAuth };
+    let dockerhubAuthCfg = { auth: dockerhubAuth };
     if (dockerhubEmail) {
-      dockerhubCfg.email = dockerhubEmail;
+      dockerhubAuthCfg.email = dockerhubEmail;
     }
-    dockerCfg.auths[dockerhubHost] = dockerhubCfg;
+    dockerCfg.auths[dockerhubHost] = dockerhubAuthCfg;
   }
 
   try {
