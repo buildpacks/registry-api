@@ -104,8 +104,8 @@ async function createUpdateRepo(repoPath) {
     }
 
     try {
-      let cmd = await execa('git', ['rev-parse', 'HEAD']);
-      return cmd.stdout;
+      const cmd = await execa('git', ['rev-parse', 'HEAD']);
+      return cmd.stdout.trim();
     } catch(err) {
       console.error(err);
     }
