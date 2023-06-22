@@ -105,20 +105,22 @@ async function createUpdateRepo(repoPath) {
 // Adding credentials to this file allows the indexer to login to remote
 // registries and access higher rate limits.
 async function registryLogin() {
-  const dockerCfgPath = path.join(process.env.HOME, ".docker", "config.json");
+  const dockerCfgDir = path.join(process.env.HOME, ".docker");
+  const dockerCfgPath = path.join(dockerCfgDir, "config.json");
   let dockerCfgContent;
+  console.log('at=registryLogin level=info msg="reading docker config file"')
   try {
     dockerCfgContent = fs.readFileSync(dockerCfgPath);
-    console.log('at=registryLogin level=info msg="existing docker config found"')
+    console.log('at=registryLogin level=info msg="existing docker config file found"')
   } catch {
-    console.log('at=registryLogin level=info msg="existing docker config not found"')
+    console.log('at=registryLogin level=info msg="existing docker config file not found"')
   }
   let dockerCfg = {};
   if (dockerCfgContent) {
     try {
       dockerCfg = JSON.parse(dockerCfgContent);
     } catch {
-      console.log('at=registryLogin level=info msg="existing docker config could not be parsed"')
+      console.log('at=registryLogin level=info msg="existing docker config file could not be parsed"')
       return;
     }
   }
@@ -140,6 +142,18 @@ async function registryLogin() {
     }
     dockerCfg.auths[dockerhubHost] = dockerhubCfg;
   }
-  fs.writeFileSync(dockerCfgPath, JSON.stringify(dockerCfg));
+
+  try {
+    fs.mkdirSync(dockerCfgDir, { recursive: true });
+  } catch(err) {
+    console.log(`at=registryLogin level=info msg="failed to create docker config directory" err="${err}"`)
+  }
+
+  console.log('at=registryLogin level=info msg="writing docker config file"')
+  try {
+    fs.writeFileSync(dockerCfgPath, JSON.stringify(dockerCfg));
+  } catch(err) {
+    console.log(`at=registryLogin level=info msg="failed to write docker config file" err="${err}"`)
+  }
   console.log('at=registryLogin level=info msg="done"')
 };
