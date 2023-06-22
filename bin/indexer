@@ -4,24 +4,30 @@ const fs = require('fs');
 const execa = require('execa');
 const path = require('path');
 const os = require('os');
+const reindex_delay = process.env.REINDEX_DELAY || 300000;
 
 (async () => {
     let tempPath = execa.sync('mktemp', ['-d']).stdout
     let repoPath = path.join(tempPath, 'tmp')
     let indexPath = path.join(tempPath, "index.json")
+    let lastSha = "";
+    let currentSha = "";
     while (true) {
         console.log('at=main level=info msg="trying to update registry-index repo"');
-        const success = await createUpdateRepo(repoPath);
-        if (success) {
+        currentSha = await createUpdateRepo(repoPath);
+        if (!currentSha) {
+            console.log('at=main level=warn msg="failed to update registry-index repo"');
+        } else if (currentSha === lastSha) {
+            console.log('at=main level=info msg="registry-index repo unchanged"');
+        } else {
             console.log('at=main level=info msg="building index config data cache"');
             fs.writeFileSync(indexPath, JSON.stringify(getNormalisedRegistry(repoPath)))
             console.log('at=main level=info msg="serialized index to file"');
             await buildIndex(indexPath)
             console.log('at=main level=debug msg="done building index config data cache"');
-        } else {
-            console.log('at=main level=warn msg="failed to update registry-index repo"');
+            lastSha = currentSha;
         }
-        await sleep(300000); // wait 5 minutes
+        await sleep(reindex_delay); // wait some time before trying again
     }
 })();
 
@@ -86,7 +92,7 @@ async function createUpdateRepo(repoPath) {
                 await execa('git', ['-C', `${repoPath}`, 'pull']);
             } catch (error) {
                 console.error(error);
-                return false;
+                return;
             }
         } else {
             fs.mkdirSync(repoPath);
@@ -94,8 +100,13 @@ async function createUpdateRepo(repoPath) {
         }
     } catch (err) {
         console.error(err);
-        return false;
+        return;
     }
 
-    return true;
+    try {
+      let cmd = await execa('git', ['rev-parse', 'HEAD']);
+      return cmd.stdout;
+    } catch(err) {
+      console.error(err);
+    }
 }
