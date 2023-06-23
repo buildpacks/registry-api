@@ -93,11 +93,21 @@ func buildIndex(entries []Entry) {
 	defer db.Close()
 
 	ch := make(chan IndexRecord)
+	updateCount := 0
 	for _, e := range entries {
+		found, err := FindEntry(db, e);
+		if err != nil {
+			fmt.Printf("at=buildIndex level=error msg='unable to query for existing entry' entry='%s/%s/%s' reason='%s'\n", e.Namespace, e.Name, e.Version, err)
+		}
+		if found {
+			fmt.Printf("at=buildIndex level=info msg='entry already up to date' entry='%s/%s/%s'\n", e.Namespace, e.Name, e.Version)
+			continue;
+		}
 		go handleMetadata(e, remote.Image, ch)
+		updateCount++
 	}
 
-	for range entries {
+	for c := 0; c < updateCount; c++ {
 		i := <-ch
 		if i.err != nil {
 			fmt.Printf("at=handleMetadata level=warn msg='failed to fetch config' entry='%s/%s@%s' reason='%s'\n", i.entry.Namespace, i.entry.Name, i.entry.Version, i.err)
@@ -166,6 +176,28 @@ func FetchBuildpackConfig(e Entry, imageFn ImageFunction) (Metadata, error) {
 	}
 
 	return m, nil
+}
+
+func FindEntry(db *sql.DB, e Entry) (bool, error) {
+	query := `
+		select exists(
+			select name
+			from buildpacks
+			where buildpacks.namespace = $1
+			and buildpacks.name = $2
+			and buildpacks.version = $3
+			and buildpacks.addr = $4
+		) as "exists";
+	`;
+	var found bool
+	err := db.QueryRow(
+		query,
+		e.Namespace,
+		e.Name,
+		e.Version,
+		e.Address,
+	).Scan(&found);
+	return found, err;
 }
 
 func UpsertMetadata(db *sql.DB, e Entry, m Metadata) error {
