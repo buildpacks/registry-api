@@ -7,6 +7,7 @@ const os = require('os');
 const reindex_delay = process.env.REINDEX_DELAY || 300000;
 
 (async () => {
+    await registryLogin();
     let tempPath = execa.sync('mktemp', ['-d']).stdout
     let repoPath = path.join(tempPath, 'tmp')
     let indexPath = path.join(tempPath, "index.json")
@@ -110,3 +111,60 @@ async function createUpdateRepo(repoPath) {
       console.error(err);
     }
 }
+
+// Create or update ~/.docker/config with credentials from the environment.
+// Adding credentials to this file allows the indexer to login to remote
+// registries and access higher rate limits.
+async function registryLogin() {
+  const dockerCfgDir = path.join(process.env.HOME, ".docker");
+  const dockerCfgPath = path.join(dockerCfgDir, "config.json");
+  let dockerCfgContent;
+  console.log('at=registryLogin level=info msg="reading docker config file"')
+  try {
+    dockerCfgContent = fs.readFileSync(dockerCfgPath);
+    console.log('at=registryLogin level=info msg="existing docker config file found"')
+  } catch {
+    console.log('at=registryLogin level=info msg="existing docker config file not found"')
+  }
+  let dockerCfg = {};
+  if (dockerCfgContent) {
+    try {
+      dockerCfg = JSON.parse(dockerCfgContent);
+    } catch {
+      console.log('at=registryLogin level=info msg="existing docker config file could not be parsed"')
+      return;
+    }
+  }
+
+  if (!dockerCfg.auths) {
+    dockerCfg.auths = {};
+  }
+
+  if (process.env.DOCKERHUB_TOKEN) {
+    console.log('at=registryLogin level=info msg="setting dockerhub credentials"')
+    let dockerhubHost = process.env.DOCKERHUB_HOST || "https://index.docker.io/v1/";
+    let dockerhubUser = process.env.DOCKERHUB_USER;
+    let dockerhubToken = process.env.DOCKERHUB_TOKEN;
+    let dockerhubEmail = process.env.DOCKERHUB_EMAIL;
+    let dockerhubAuth = Buffer.from(`${dockerhubUser}:${dockerhubToken}`).toString('base64');
+    let dockerhubAuthCfg = { auth: dockerhubAuth };
+    if (dockerhubEmail) {
+      dockerhubAuthCfg.email = dockerhubEmail;
+    }
+    dockerCfg.auths[dockerhubHost] = dockerhubAuthCfg;
+  }
+
+  try {
+    fs.mkdirSync(dockerCfgDir, { recursive: true });
+  } catch(err) {
+    console.log(`at=registryLogin level=info msg="failed to create docker config directory" err="${err}"`)
+  }
+
+  console.log('at=registryLogin level=info msg="writing docker config file"')
+  try {
+    fs.writeFileSync(dockerCfgPath, JSON.stringify(dockerCfg));
+  } catch(err) {
+    console.log(`at=registryLogin level=info msg="failed to write docker config file" err="${err}"`)
+  }
+  console.log('at=registryLogin level=info msg="done"')
+};
