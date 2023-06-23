@@ -4,7 +4,7 @@ const fs = require('fs');
 const execa = require('execa');
 const path = require('path');
 const os = require('os');
-const reindex_delay = process.env.REINDEX_DELAY || 300000;
+const reindex_delay = process.env.REINDEX_DELAY || 90000;
 
 (async () => {
     await registryLogin();
