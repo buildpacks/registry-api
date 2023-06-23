@@ -44,7 +44,7 @@ func TestCacher(t *testing.T) {
 				}
 			)
 			it.Before(func() {
-				f.On("Execute", mock.Anything).Return(i, nil)
+				f.On("Execute", mock.Anything, mock.Anything).Return(i, nil)
 			})
 
 			it("fails if io.buildpacks.buildpackage.metadata is not on image", func() {

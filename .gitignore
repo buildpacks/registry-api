@@ -44,3 +44,6 @@ yarn-debug.log*
 
 # This is a yarn project
 package-lock.json
+
+# Ignore asdf versions
+.tool-versions

@@ -12,6 +12,7 @@ import (
 
 	"github.com/lib/pq"
 
+	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
 	v1 "github.com/google/go-containerregistry/pkg/v1"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
@@ -131,7 +132,7 @@ func FetchBuildpackConfig(e Entry, imageFn ImageFunction) (Metadata, error) {
 		return Metadata{}, errors.New(fmt.Sprintf("address is not a digest: %s", e.Address))
 	}
 
-	image, err := imageFn(ref)
+	image, err := imageFn(ref, remote.WithAuthFromKeychain(authn.DefaultKeychain))
 	if err != nil {
 		return Metadata{}, err
 	}
