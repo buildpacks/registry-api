@@ -49,7 +49,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
         if (this.state.loading || (this.state.searchResults.length === 0 && this.state.searchTerm === '')) {
             summary = null;
         }
-       
+
         return (
             <div className="Search">
                 <div className="Search-header">
@@ -72,7 +72,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
             </div>
         );
     }
-    
+
     async keyPressed(e: any) {
         const searchTerm = (e.target.value + '').trim();
         if (searchTerm === '' || e.keyCode !== 13) {
@@ -93,7 +93,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
         this.setState({
             formValue: a
         });
-        
+
         await this.fetchSearchResults(a);
     }
 
@@ -103,7 +103,7 @@ class Search extends React.Component<{}, { searchTerm: string, searchResults: an
         }
 
         try {
-            const apiHost = process.env.CNB_API_HOST || 'https://cnb-registry-api.herokuapp.com';
+            const apiHost = process.env.CNB_API_HOST;
             const link = `${apiHost}/api/v1/search?matches=${searchText}`;
             const response: AxiosResponse = await Axios.get(link);
             if (response.status >= 200 && response.status < 300) {
