@@ -180,10 +180,10 @@ Run the tests:
 ```
 $ make test
 ```
-Then run the app:
+Then run the Rails app and asset watcher/compiler with:
 
 ```
-$ bundle exec rails s
+$ ./bin/dev
 ```
 
 In other terminal session, run the background worker to create the index:
