@@ -11,9 +11,8 @@ gem 'rack-attack'
 gem 'rack-cors'
 gem 'rails', '~> 6.1.0'
 gem 'rollbar'
-gem 'sass-rails', '>= 6'
 gem 'toml'
-gem 'webpacker', '~> 5.2', '>= 5.2.1'
+gem 'jsbundling-rails', '~> 1.3'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
