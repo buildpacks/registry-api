@@ -131,7 +131,7 @@ GEM
     prmd (0.14.0)
       erubis (~> 2.7)
       json_schema (~> 0.3, >= 0.3.1)
-    puma (5.6.7)
+    puma (5.6.9)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.9)
