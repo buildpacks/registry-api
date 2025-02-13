@@ -10,26 +10,18 @@ $theme-colors: (
 
 @import "~bootstrap/scss/bootstrap";
 
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: $blue-dark;
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  min-width: 320px;
+}
+
+// Keep fontsize consistent for all the screen sizes
 html {
   font-size: 1rem;
-}
-
-@include media-breakpoint-up(sm) {
-  html {
-    font-size: 1.2rem;
-  }
-}
-
-@include media-breakpoint-up(md) {
-  html {
-    font-size: 1.4rem;
-  }
-}
-
-@include media-breakpoint-up(lg) {
-  html {
-    font-size: 1.4rem;
-  }
 }
 
 .App {
