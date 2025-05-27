@@ -85,6 +85,28 @@ func main() {
 	fmt.Println("at=index_buildpack level=info msg='done updating index'")
 }
 
+func RedactString(authConfig *authn.AuthConfig, inputStr string) string {
+	outputStr := inputStr // Start with the original string
+
+	if authConfig.IdentityToken != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.IdentityToken, "<REDACTED>")
+	}
+	if authConfig.RegistryToken != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.RegistryToken, "<REDACTED>")
+	}
+	if authConfig.Password != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.Password, "<REDACTED>")
+	}
+	if authConfig.Username != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.Username, "<REDACTED>")
+	}
+	if authConfig.Auth != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.Auth, "<REDACTED>")
+	}
+
+	return outputStr
+}
+
 func buildIndex(entries []Entry) {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
