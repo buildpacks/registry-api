@@ -154,18 +154,23 @@ func FetchBuildpackConfig(e Entry, imageFn ImageFunction) (Metadata, error) {
 	if err != nil {
 		return Metadata{}, errors.New(fmt.Sprintf("Cannot resolve credentials for context %s", ref.Context()))
 	}
+	authConfig, err := authenticator.Authorization()
+	if err != nil {
+		return Metadata{}, errors.New("Cannot convert credentials to auth config")
+	}
+
 	if _, ok := ref.(name.Digest); !ok {
 		return Metadata{}, errors.New(fmt.Sprintf("address is not a digest: %s", e.Address))
 	}
 
 	image, err := imageFn(ref, remote.WithAuth(authenticator))
 	if err != nil {
-		return Metadata{}, err
+		return Metadata{}, errors.New(RedactString(authConfig, fmt.Sprintf("%s", err)))
 	}
 
 	configFile, err := image.ConfigFile()
 	if err != nil {
-		return Metadata{}, err
+		return Metadata{}, errors.New(RedactString(authConfig, fmt.Sprintf("%s", err)))
 	}
 
 	raw, ok := configFile.Config.Labels[MetadataLabel]
@@ -175,7 +180,7 @@ func FetchBuildpackConfig(e Entry, imageFn ImageFunction) (Metadata, error) {
 
 	var m Metadata
 	if err := json.Unmarshal([]byte(raw), &m); err != nil {
-		return Metadata{}, err
+		return Metadata{}, errors.New(RedactString(authConfig, fmt.Sprintf("%s", err)))
 	}
 
 	if fmt.Sprintf("%s/%s", e.Namespace, e.Name) != m.ID {
