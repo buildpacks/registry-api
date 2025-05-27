@@ -150,11 +150,15 @@ func FetchBuildpackConfig(e Entry, imageFn ImageFunction) (Metadata, error) {
 		return Metadata{}, err
 	}
 
+	authenticator, err := authn.DefaultKeychain.Resolve(ref.Context())
+	if err != nil {
+		return Metadata{}, errors.New(fmt.Sprintf("Cannot resolve credentials for context %s", ref.Context()))
+	}
 	if _, ok := ref.(name.Digest); !ok {
 		return Metadata{}, errors.New(fmt.Sprintf("address is not a digest: %s", e.Address))
 	}
 
-	image, err := imageFn(ref, remote.WithAuthFromKeychain(authn.DefaultKeychain))
+	image, err := imageFn(ref, remote.WithAuth(authenticator))
 	if err != nil {
 		return Metadata{}, err
 	}
