@@ -3,6 +3,7 @@ package main_test
 import (
 	"errors"
 	"fmt"
+	"github.com/google/go-containerregistry/pkg/authn"
 	ib "github.com/buildpacks/registry-api/cmd/index-buildpacks"
 	"github.com/buildpacks/registry-api/internal/mocks"
 	v1 "github.com/google/go-containerregistry/pkg/v1"
@@ -14,6 +15,40 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/spec"
 )
+
+func TestRedactString_AllAuthConfigFieldsEmpty(t *testing.T) {
+	authConfig := authn.AuthConfig{}
+	inputStr := "nothing sensitive"
+	expectedOutput := inputStr
+
+	captured := ib.RedactString(&authConfig, inputStr)
+
+	if captured != expectedOutput {
+		t.Errorf("Expected output for 'AllAuthConfigFieldsEmpty':\n%q\nGot output:\n%q", expectedOutput, captured)
+	}
+}
+
+func TestRedactString_AllFieldsSetAndPresent(t *testing.T) {
+	authConfig := authn.AuthConfig{
+		IdentityToken: "idTokenVal",
+		RegistryToken: "regTokenVal",
+		Password:      "passVal",
+		Username:      "userVal",
+		Auth:          "authFieldVal",
+	}
+	inputStr := "info idTokenVal regTokenVal passVal userVal authFieldVal end"
+	expectedOutput := "info <REDACTED> <REDACTED> <REDACTED> <REDACTED> <REDACTED> end"
+	captured := ib.RedactString(&authConfig, inputStr)
+	if expectedOutput != captured {
+		t.Errorf("Expected output for 'AllFieldsSetAndPresent':\n%q\nGot output:\n%q", expectedOutput, captured)
+	}
+
+	expectedEmptyOutput := ""
+	capturedEmpty := ib.RedactString(&authConfig, "")
+	if capturedEmpty != expectedEmptyOutput {
+		t.Errorf("Expected output for empty string input:\n%q\nGot output:\n%q", expectedEmptyOutput, capturedEmpty)
+	}
+}
 
 func TestCacher(t *testing.T) {
 	spec.Run(t, "verify-metadata", func(t *testing.T, context spec.G, it spec.S) {

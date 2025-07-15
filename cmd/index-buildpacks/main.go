@@ -85,6 +85,28 @@ func main() {
 	fmt.Println("at=index_buildpack level=info msg='done updating index'")
 }
 
+func RedactString(authConfig *authn.AuthConfig, inputStr string) string {
+	outputStr := inputStr // Start with the original string
+
+	if authConfig.IdentityToken != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.IdentityToken, "<REDACTED>")
+	}
+	if authConfig.RegistryToken != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.RegistryToken, "<REDACTED>")
+	}
+	if authConfig.Password != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.Password, "<REDACTED>")
+	}
+	if authConfig.Username != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.Username, "<REDACTED>")
+	}
+	if authConfig.Auth != "" {
+		outputStr = strings.ReplaceAll(outputStr, authConfig.Auth, "<REDACTED>")
+	}
+
+	return outputStr
+}
+
 func buildIndex(entries []Entry) {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
@@ -128,18 +150,27 @@ func FetchBuildpackConfig(e Entry, imageFn ImageFunction) (Metadata, error) {
 		return Metadata{}, err
 	}
 
+	authenticator, err := authn.DefaultKeychain.Resolve(ref.Context())
+	if err != nil {
+		return Metadata{}, errors.New(fmt.Sprintf("Cannot resolve credentials for context %s", ref.Context()))
+	}
+	authConfig, err := authenticator.Authorization()
+	if err != nil {
+		return Metadata{}, errors.New("Cannot convert credentials to auth config")
+	}
+
 	if _, ok := ref.(name.Digest); !ok {
 		return Metadata{}, errors.New(fmt.Sprintf("address is not a digest: %s", e.Address))
 	}
 
-	image, err := imageFn(ref, remote.WithAuthFromKeychain(authn.DefaultKeychain))
+	image, err := imageFn(ref, remote.WithAuth(authenticator))
 	if err != nil {
-		return Metadata{}, err
+		return Metadata{}, errors.New(RedactString(authConfig, fmt.Sprintf("%s", err)))
 	}
 
 	configFile, err := image.ConfigFile()
 	if err != nil {
-		return Metadata{}, err
+		return Metadata{}, errors.New(RedactString(authConfig, fmt.Sprintf("%s", err)))
 	}
 
 	raw, ok := configFile.Config.Labels[MetadataLabel]
@@ -149,7 +180,7 @@ func FetchBuildpackConfig(e Entry, imageFn ImageFunction) (Metadata, error) {
 
 	var m Metadata
 	if err := json.Unmarshal([]byte(raw), &m); err != nil {
-		return Metadata{}, err
+		return Metadata{}, errors.New(RedactString(authConfig, fmt.Sprintf("%s", err)))
 	}
 
 	if fmt.Sprintf("%s/%s", e.Namespace, e.Name) != m.ID {
